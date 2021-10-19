@@ -1,5 +1,6 @@
 package br.com.restassuredapitesting.tests.booking.tests;
 
+import br.com.restassuredapitesting.base.BaseTests;
 import br.com.restassuredapitesting.suites.AllTests;
 import br.com.restassuredapitesting.tests.booking.requests.GetBookingRequest;
 import org.junit.Test;
@@ -7,12 +8,12 @@ import org.junit.experimental.categories.Category;
 
 import static org.hamcrest.Matchers.greaterThan;
 
-public class GetBookingTest {
+public class GetBookingTest extends BaseTests {
 
     GetBookingRequest getBookingRequest = new GetBookingRequest();
 
     @Test
-    @Category({AllTests.class})
+    @Category(AllTests.class)
     public void validaListagemDeIdsDasReservas() {
         getBookingRequest.bookingReturnIds()
                 .then()

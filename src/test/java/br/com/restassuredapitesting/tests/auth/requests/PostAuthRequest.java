@@ -13,7 +13,7 @@ public class PostAuthRequest {
                 .header("Content-Type", "application/json")
                 .when()
                 .body(payloadLogin.jsonAuthLogin().toString())
-                .post("https://treinamento-api.herokuapp.com/auth");
+                .post("auth");
     }
 
     public String getToken() {
