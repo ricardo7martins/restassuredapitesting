@@ -26,15 +26,8 @@ public class PutBookingTest extends BaseTests {
     @DisplayName("Alterar uma reserva somente utilizando o token")
     public void updateBooking() {
         PostAuthRequest login = new PostAuthRequest();
-        int primeiroId = getBookings
-                .bookingReturnIds()
-                .then()
-                .statusCode(200)
-                .extract()
-                .path("[0].bookingid");
 
-
-        bookingRequest.updateBookingToken(primeiroId, login.getToken())
+        bookingRequest.updateBookingToken(getBookings.getFirstId(), login.getToken())
                 .then()
                 .statusCode(200)
                 .body("size()", greaterThan(0));

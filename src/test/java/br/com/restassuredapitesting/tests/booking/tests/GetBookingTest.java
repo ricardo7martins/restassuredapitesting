@@ -27,6 +27,7 @@ public class GetBookingTest extends BaseTests {
     @Category(AllTests.class)
     @DisplayName("Listar Ids de reservas")
     public void validaListagemDeIdsDasReservas() {
+        System.out.println(getBookingRequest.bookingReturnIds().getBody());
         getBookingRequest.bookingReturnIds()
                 .then()
                 .statusCode(200)
@@ -41,7 +42,19 @@ public class GetBookingTest extends BaseTests {
         getBookingRequest.bookingReturnIds()
                 .then()
                 .statusCode(200)
-                .body(matchesJsonSchema(new File(Utils.getSchemaBasePath("booking", "bookings"))));
+                .body(matchesJsonSchema(new File(Utils
+                        .getSchemaBasePath("booking", "bookings"))));
     }
 
+    @Test
+    @Severity(SeverityLevel.BLOCKER)
+    @Category({AllTests.class, ContractTests.class})
+    @DisplayName("Garantir o schema do retorno de uma reserva específica")
+    public void validaSchemaDeUmaReserva() {
+        getBookingRequest.getFirstBooking()
+                .then()
+                .statusCode(200)
+                .body(matchesJsonSchema(new File(Utils
+                        .getSchemaBasePath("booking", "firstbooking"))));
+    }
 }
