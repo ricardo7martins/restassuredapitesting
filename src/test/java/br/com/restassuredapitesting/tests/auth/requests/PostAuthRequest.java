@@ -10,7 +10,7 @@ import static io.restassured.RestAssured.given;
 
 @Feature("Feature de Autenticação")
 public class PostAuthRequest {
-    AuthPayloads payloadLogin = new AuthPayloads();
+    AuthPayloads loginPayload = new AuthPayloads();
 
 
     @Step("Retorna o token")
@@ -18,7 +18,7 @@ public class PostAuthRequest {
         return given()
                 .header("Content-Type", "application/json")
                 .when()
-                .body(payloadLogin.jsonAuthLogin().toString())
+                .body(loginPayload.jsonAuthLogin().toString())
                 .post("auth");
     }
 
