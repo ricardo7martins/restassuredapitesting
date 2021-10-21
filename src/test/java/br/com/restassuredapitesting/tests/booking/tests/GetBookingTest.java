@@ -1,6 +1,7 @@
 package br.com.restassuredapitesting.tests.booking.tests;
 
 import br.com.restassuredapitesting.base.BaseTests;
+import br.com.restassuredapitesting.suites.AcceptanceTests;
 import br.com.restassuredapitesting.suites.AllTests;
 import br.com.restassuredapitesting.suites.ContractTests;
 import br.com.restassuredapitesting.tests.booking.requests.GetBookingRequest;
@@ -72,7 +73,7 @@ public class GetBookingTest extends BaseTests {
 
     @Test
     @Severity(SeverityLevel.BLOCKER)
-    @Category({AllTests.class, ContractTests.class})
+    @Category({AllTests.class,})
     @DisplayName("Listar IDs de reservas utilizando o filtro firstname")
     public void validaBookingsComFiltroFirstName() {
         getBookingRequest.getBookingsBySingleFilter("firstname", "Jim")
@@ -83,7 +84,7 @@ public class GetBookingTest extends BaseTests {
 
     @Test
     @Severity(SeverityLevel.BLOCKER)
-    @Category({AllTests.class, ContractTests.class})
+    @Category({AllTests.class,})
     @DisplayName("Listar IDs de reservas utilizando o filtro lastname")
     public void validaBookingsComFiltroLastName() {
         getBookingRequest.getBookingsBySingleFilter("lastname", "Brown")
@@ -94,7 +95,7 @@ public class GetBookingTest extends BaseTests {
 
     @Test
     @Severity(SeverityLevel.BLOCKER)
-    @Category({AllTests.class, ContractTests.class})
+    @Category({AllTests.class,})
     @DisplayName("Listar IDs de reservas utilizando o filtro checkin")
     public void validaBookingsComFiltroCheckin() {
         getBookingRequest.getBookingsBySingleFilter("checkin", "2019-05-01")
@@ -105,7 +106,7 @@ public class GetBookingTest extends BaseTests {
 
     @Test
     @Severity(SeverityLevel.BLOCKER)
-    @Category({AllTests.class, ContractTests.class})
+    @Category({AllTests.class,})
     @DisplayName("Listar IDs de reservas utilizando o filtro checkout")
     public void validaBookingsComFiltroCheckout() {
         getBookingRequest.getBookingsBySingleFilter("checkout", "Jim")
@@ -116,7 +117,7 @@ public class GetBookingTest extends BaseTests {
 
     @Test
     @Severity(SeverityLevel.BLOCKER)
-    @Category({AllTests.class, ContractTests.class})
+    @Category({AllTests.class, AcceptanceTests.class})
     @DisplayName("Visualizar erro de servidor 500 quando enviar filtro mal formatado")
     public void validaBookingsComFiltroInvalido() {
         getBookingRequest.getBookingsBySingleFilter("NonExistentFilter", "Whatever")
@@ -127,7 +128,7 @@ public class GetBookingTest extends BaseTests {
 
     @Test
     @Severity(SeverityLevel.BLOCKER)
-    @Category({AllTests.class, ContractTests.class})
+    @Category({AllTests.class,})
     @DisplayName("Retornar lista vazia quando não houver retornos com certo filtro")
     public void validaBookingsComFiltroValidoSemRespostas() {
         getBookingRequest.getBookingsBySingleFilter("firstname", "NonExistentName")

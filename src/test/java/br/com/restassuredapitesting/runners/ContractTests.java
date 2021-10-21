@@ -1,6 +1,5 @@
 package br.com.restassuredapitesting.runners;
 
-
 import br.com.restassuredapitesting.tests.booking.tests.GetBookingTest;
 import org.junit.experimental.categories.Categories;
 import org.junit.runner.RunWith;

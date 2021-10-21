@@ -1,6 +1,7 @@
 package br.com.restassuredapitesting.tests.booking.tests;
 
 import br.com.restassuredapitesting.base.BaseTests;
+import br.com.restassuredapitesting.suites.AcceptanceTests;
 import br.com.restassuredapitesting.suites.AllTests;
 import br.com.restassuredapitesting.suites.SmokeTests;
 import br.com.restassuredapitesting.tests.booking.requests.DeleteBookingRequest;
@@ -28,7 +29,7 @@ public class DeleteBookingTest extends BaseTests {
 
     @Test
     @Severity(SeverityLevel.CRITICAL)
-    @Category({AllTests.class, SmokeTests.class})
+    @Category({AllTests.class, AcceptanceTests.class, SmokeTests.class})
     @DisplayName("Tentar excluir um reserva que não existe")
     public void validaDeleçãoDeBookingNaoExistente() {
         deleteBooking.deleteMissingBooking(10000)
@@ -38,7 +39,7 @@ public class DeleteBookingTest extends BaseTests {
 
     @Test
     @Severity(SeverityLevel.CRITICAL)
-    @Category({AllTests.class, SmokeTests.class})
+    @Category({AllTests.class, AcceptanceTests.class, SmokeTests.class})
     @DisplayName("Tentar excluir uma reserva sem autorização")
     public void validaDeleçãoDeBookingSemAutorizacao() {
         deleteBooking.deleteBookingWrongAuth()

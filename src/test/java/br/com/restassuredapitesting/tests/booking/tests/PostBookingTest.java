@@ -1,7 +1,9 @@
 package br.com.restassuredapitesting.tests.booking.tests;
 
 import br.com.restassuredapitesting.base.BaseTests;
+import br.com.restassuredapitesting.suites.AcceptanceTests;
 import br.com.restassuredapitesting.suites.AllTests;
+import br.com.restassuredapitesting.suites.SmokeTests;
 import br.com.restassuredapitesting.tests.booking.requests.PostBookingRequest;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
@@ -15,7 +17,7 @@ public class PostBookingTest extends BaseTests {
 
     @Test
     @Severity(SeverityLevel.BLOCKER)
-    @Category(AllTests.class)
+    @Category({AllTests.class, AcceptanceTests.class})
     @DisplayName("Tentar criar uma reserva sem estar logado")
     public void validaSePodeCriarReservaSemCadastro() {
         postBooking.sendBookingNoLogin()
@@ -26,7 +28,7 @@ public class PostBookingTest extends BaseTests {
 
     @Test
     @Severity(SeverityLevel.BLOCKER)
-    @Category(AllTests.class)
+    @Category({AllTests.class, SmokeTests.class})
     @DisplayName("Tentar criar uma reserva estando logado")
     public void validaSePodeCriarReservaComCadastro() {
         postBooking.sendBookingWithLogin()
@@ -37,7 +39,7 @@ public class PostBookingTest extends BaseTests {
 
     @Test
     @Severity(SeverityLevel.BLOCKER)
-    @Category(AllTests.class)
+    @Category({AllTests.class, SmokeTests.class})
     @DisplayName("Validar a criação de mais de um livro em sequencia")
     public void validaSePodeCriarMaisDeUmaReservaCurtoPeriodo() {
         for (int i = 1; i < 4; i++) {
@@ -51,7 +53,7 @@ public class PostBookingTest extends BaseTests {
 
     @Test
     @Severity(SeverityLevel.BLOCKER)
-    @Category(AllTests.class)
+    @Category({AllTests.class, AcceptanceTests.class})
     @DisplayName("Validar retorno 500 quando o payload da reserva estiver inválido")
     public void validaSePodeCriarReservaComFaltandoInformacoes() {
         postBooking.sendBookingWithMissingInfo()
@@ -61,19 +63,19 @@ public class PostBookingTest extends BaseTests {
 
     @Test
     @Severity(SeverityLevel.BLOCKER)
-    @Category(AllTests.class)
+    @Category({AllTests.class, AcceptanceTests.class})
     @DisplayName("Criar uma reserva enviando mais parâmetros no payload da reserva")
     public void validaSePodeCriarReservaComParametrosAdicionais() {
         postBooking.sendBookingWithExtraInfo()
                 .then()
-                .statusCode(200);
+                .statusCode(400);
         System.out.println(postBooking.sendBookingWithLogin().then().extract().asString());
         Assert.assertEquals("a", postBooking.sendBookingWithLogin().then().extract().asString());
     }
 
     @Test
     @Severity(SeverityLevel.BLOCKER)
-    @Category(AllTests.class)
+    @Category({AllTests.class, AcceptanceTests.class})
     @DisplayName("Validar retorno 418 quando o header Accept for invalido")
     public void validaSePodeCriarReservaComHeaderAcceptInvalido() {
         postBooking.sendBookingWithInvalidAcceptHeader()
