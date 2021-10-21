@@ -1,23 +1,37 @@
 package br.com.restassuredapitesting.tests.booking.requests;
 
-import br.com.restassuredapitesting.base.BaseTests;
 import br.com.restassuredapitesting.tests.auth.requests.PostAuthRequest;
 import io.restassured.response.Response;
 
 import static io.restassured.RestAssured.given;
 
-public class DeleteBookingRequest extends BaseTests {
+public class DeleteBookingRequest {
 
     PostAuthRequest loginRequest = new PostAuthRequest();
     GetBookingRequest getBookings = new GetBookingRequest();
 
     public Response deleteFirstBooking() {
-        System.out.println("Primeiro Id antes da deleção: " + getBookings.getFirstId());
         return given()
                 .header("Content-Type", "application/json")
                 .header("Cookie", loginRequest.getToken())
                 .when()
-                .delete(("booking/" + getBookings.getFirstId()));
+                .delete("booking/" + getBookings.getFirstId());
+    }
+
+    public Response deleteMissingBooking(int id) {
+        return given()
+                .header("Content-Type", "application/json")
+                .header("Cookie", loginRequest.getToken())
+                .when()
+                .delete("booking/" + id);
+    }
+
+    public Response deleteBookingWrongAuth() {
+        return given()
+                .header("Content-Type", "application/json")
+                .header("Cookie", "token=birobiro")
+                .when()
+                .delete("booking/" + getBookings.getFirstBooking());
     }
 
 }

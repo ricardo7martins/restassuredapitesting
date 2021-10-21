@@ -20,11 +20,29 @@ public class DeleteBookingTest extends BaseTests {
     @Severity(SeverityLevel.CRITICAL)
     @Category({AllTests.class, SmokeTests.class})
     @DisplayName("Excluir um reserva com sucesso")
-    public void validaDeleçãoDoPrimeiroBooking() {
+    public void validaDeleçãoDeBooking() {
         deleteBooking.deleteFirstBooking()
                 .then()
                 .statusCode(201);
+    }
 
-        System.out.println("Primeiro Id depois da deleção: " + getBookings.getFirstId());
+    @Test
+    @Severity(SeverityLevel.CRITICAL)
+    @Category({AllTests.class, SmokeTests.class})
+    @DisplayName("Tentar excluir um reserva que não existe")
+    public void validaDeleçãoDeBookingNaoExistente() {
+        deleteBooking.deleteMissingBooking(10000)
+                .then()
+                .statusCode(405);
+    }
+
+    @Test
+    @Severity(SeverityLevel.CRITICAL)
+    @Category({AllTests.class, SmokeTests.class})
+    @DisplayName("Tentar excluir uma reserva sem autorização")
+    public void validaDeleçãoDeBookingSemAutorizacao() {
+        deleteBooking.deleteBookingWrongAuth()
+                .then()
+                .statusCode(403);
     }
 }

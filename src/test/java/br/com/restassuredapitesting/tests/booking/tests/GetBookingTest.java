@@ -16,9 +16,11 @@ import java.io.File;
 
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchema;
 import static org.hamcrest.Matchers.greaterThan;
+import static org.hamcrest.Matchers.is;
 
 @Feature("Feature de Retorno de reservas")
 public class GetBookingTest extends BaseTests {
+
 
     GetBookingRequest getBookingRequest = new GetBookingRequest();
 
@@ -27,7 +29,6 @@ public class GetBookingTest extends BaseTests {
     @Category(AllTests.class)
     @DisplayName("Listar Ids de reservas")
     public void validaListagemDeIdsDasReservas() {
-        System.out.println(getBookingRequest.bookingReturnIds().getBody());
         getBookingRequest.bookingReturnIds()
                 .then()
                 .statusCode(200)
@@ -55,6 +56,84 @@ public class GetBookingTest extends BaseTests {
                 .then()
                 .statusCode(200)
                 .body(matchesJsonSchema(new File(Utils
-                        .getSchemaBasePath("booking", "firstbooking"))));
+                        .getSchemaBasePath("booking", "booking"))));
     }
+
+//    @Test
+//    @Severity(SeverityLevel.BLOCKER)
+//    @Category({AllTests.class, ContractTests.class})
+//    @DisplayName("Listar IDs de reservas utilizando o filtro firstname")
+//    public void validaBookingsComFiltroValido() {
+//        getBookingRequest.getBookingsBySingleFilter("firstname", "Jim")
+//                .then()
+//                .statusCode(200)
+//                .body("size()", greaterThan(0));
+//    }
+
+    @Test
+    @Severity(SeverityLevel.BLOCKER)
+    @Category({AllTests.class, ContractTests.class})
+    @DisplayName("Listar IDs de reservas utilizando o filtro firstname")
+    public void validaBookingsComFiltroFirstName() {
+        getBookingRequest.getBookingsBySingleFilter("firstname", "Jim")
+                .then()
+                .statusCode(200)
+                .body("size()", greaterThan(0));
+    }
+
+    @Test
+    @Severity(SeverityLevel.BLOCKER)
+    @Category({AllTests.class, ContractTests.class})
+    @DisplayName("Listar IDs de reservas utilizando o filtro lastname")
+    public void validaBookingsComFiltroLastName() {
+        getBookingRequest.getBookingsBySingleFilter("lastname", "Brown")
+                .then()
+                .statusCode(200)
+                .body("size()", greaterThan(0));
+    }
+
+    @Test
+    @Severity(SeverityLevel.BLOCKER)
+    @Category({AllTests.class, ContractTests.class})
+    @DisplayName("Listar IDs de reservas utilizando o filtro checkin")
+    public void validaBookingsComFiltroCheckin() {
+        getBookingRequest.getBookingsBySingleFilter("checkin", "2019-05-01")
+                .then()
+                .statusCode(200)
+                .body("size()", greaterThan(0));
+    }
+
+    @Test
+    @Severity(SeverityLevel.BLOCKER)
+    @Category({AllTests.class, ContractTests.class})
+    @DisplayName("Listar IDs de reservas utilizando o filtro checkout")
+    public void validaBookingsComFiltroCheckout() {
+        getBookingRequest.getBookingsBySingleFilter("checkout", "Jim")
+                .then()
+                .statusCode(200)
+                .body("size()", greaterThan(0));
+    }
+
+    @Test
+    @Severity(SeverityLevel.BLOCKER)
+    @Category({AllTests.class, ContractTests.class})
+    @DisplayName("Visualizar erro de servidor 500 quando enviar filtro mal formatado")
+    public void validaBookingsComFiltroInvalido() {
+        getBookingRequest.getBookingsBySingleFilter("NonExistentFilter", "Whatever")
+                .then()
+                .statusCode(500)
+                .body("size()", is(0));
+    }
+
+    @Test
+    @Severity(SeverityLevel.BLOCKER)
+    @Category({AllTests.class, ContractTests.class})
+    @DisplayName("Retornar lista vazia quando não houver retornos com certo filtro")
+    public void validaBookingsComFiltroValidoSemRespostas() {
+        getBookingRequest.getBookingsBySingleFilter("firstname", "NonExistentName")
+                .then()
+                .statusCode(204)
+                .body("size()", is(0));
+    }
+
 }

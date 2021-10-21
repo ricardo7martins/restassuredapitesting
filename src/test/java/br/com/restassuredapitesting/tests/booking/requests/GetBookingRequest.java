@@ -29,4 +29,18 @@ public class GetBookingRequest extends BaseTests {
                 .when()
                 .get("booking/" + getFirstId());
     }
+
+    public Response getBookingsBySingleFilter(String filter, String value) {
+        return given()
+                .when()
+                .get(String.format("booking/?%s=%s", filter, value));
+    }
+
+    public Response getBookingsByTwoFilters(String firstFilter, String firstValue,
+                                            String secondFilter, String secondValue) {
+        return given()
+                .when()
+                .get(String.format("booking/?%s=%s&%s=%s", firstFilter, firstValue,
+                        secondFilter, secondValue));
+    }
 }

@@ -17,19 +17,51 @@ import static org.hamcrest.Matchers.greaterThan;
 @Feature("Feature de Atualização de Reservas")
 public class PutBookingTest extends BaseTests {
 
-    PutBookingRequest bookingRequest = new PutBookingRequest();
+    PutBookingRequest putBookings = new PutBookingRequest();
     GetBookingRequest getBookings = new GetBookingRequest();
+    PostAuthRequest login = new PostAuthRequest();
 
     @Test
     @Severity(SeverityLevel.NORMAL)
     @Category(AllTests.class)
     @DisplayName("Alterar uma reserva somente utilizando o token")
-    public void updateBooking() {
-        PostAuthRequest login = new PostAuthRequest();
-
-        bookingRequest.updateBookingToken(getBookings.getFirstId(), login.getToken())
+    public void alterarBookingComToken() {
+        putBookings.updateBookingToken(getBookings.getFirstId(), login.getToken())
                 .then()
                 .statusCode(200)
+                .body("size()", greaterThan(0));
+    }
+
+    @Test
+    @Severity(SeverityLevel.NORMAL)
+    @Category(AllTests.class)
+    @DisplayName("Tentar alterar uma reserva quando o token enviado for inválido")
+    public void alterarBookingComTokenInvalido() {
+        putBookings.updateBookingToken(getBookings.getFirstId(), "token=birobiro")
+                .then()
+                .statusCode(403)
+                .body("size()", greaterThan(0));
+    }
+
+    @Test
+    @Severity(SeverityLevel.NORMAL)
+    @Category(AllTests.class)
+    @DisplayName("Tentar alterar uma reserva quando o token não for enviado")
+    public void alterarBookingSemToken() {
+        putBookings.updateBookingNoToken(getBookings.getFirstId())
+                .then()
+                .statusCode(401)
+                .body("size()", greaterThan(0));
+    }
+
+    @Test
+    @Severity(SeverityLevel.NORMAL)
+    @Category(AllTests.class)
+    @DisplayName("Tentar alterar uma reserva que não existe")
+    public void alterarBookingNaoExistente() {
+        putBookings.updateBookingToken(10000, login.getToken())
+                .then()
+                .statusCode(405)
                 .body("size()", greaterThan(0));
     }
 }

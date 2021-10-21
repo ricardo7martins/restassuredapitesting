@@ -4,11 +4,12 @@ import br.com.restassuredapitesting.tests.auth.requests.PostAuthRequest;
 import br.com.restassuredapitesting.tests.booking.requests.payloads.BookingPayloads;
 import io.qameta.allure.Step;
 import io.restassured.response.Response;
+import org.json.JSONObject;
 
 import static io.restassured.RestAssured.given;
 
 public class PutBookingRequest {
-    PostAuthRequest loginRequest = new PostAuthRequest();
+    PostAuthRequest login = new PostAuthRequest();
     BookingPayloads bookingPayload = new BookingPayloads();
 
     @Step("Atualiza uma reserva específica com o parâmetro token")
@@ -20,5 +21,28 @@ public class PutBookingRequest {
                 .when()
                 .body(bookingPayload.getBookingPayload().toString())
                 .put("booking/" + id);
+    }
+
+    public Response updateBookingNoToken(int id) {
+        return given()
+                .header("Content-Type", "application/json")
+                .header("Accept", "application/json")
+                .when()
+                .body(bookingPayload.getBookingPayload().toString())
+                .put("booking/" + id);
+    }
+
+    public Response updatePartialWithToken() {
+        JSONObject payload = new JSONObject();
+        payload.put("firstname", "Jonas");
+        payload.put("lastname", "Franco");
+        return given()
+                .header("Content-Type", "application/json")
+                .header("Accept", "application/json")
+                .header("Cookie", login.getToken())
+                .when()
+                .body(payload.toString())
+                .put("booking/" + 8);
+
     }
 }

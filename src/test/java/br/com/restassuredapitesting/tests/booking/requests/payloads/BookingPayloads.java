@@ -1,27 +1,41 @@
 package br.com.restassuredapitesting.tests.booking.requests.payloads;
 
-import org.json.JSONException;
+import com.github.javafaker.Faker;
 import org.json.JSONObject;
 
 public class BookingPayloads {
 
+    Faker randomStuff = new Faker();
 
     public JSONObject getBookingPayload() {
         JSONObject payload = new JSONObject();
         JSONObject bookingDates = new JSONObject();
-        try {
-            bookingDates.put("checkin", "2018-01-01");
-            bookingDates.put("checkout", "2019-01-01");
-            payload.put("firstname", "Cristiano");
-            payload.put("lastname", "Ronaldo");
-            payload.put("totalprice", 111);
-            payload.put("depositpaid", true);
-            payload.put("bookingdates", bookingDates);
-            payload.put("additionalneeds", "breakfast");
-        } catch (JSONException e) {
-            System.out.println("Informação inválida para BookingPayloads");
-            e.printStackTrace();
-        }
+        bookingDates.put("checkin", "2018-01-01");
+        bookingDates.put("checkout", "2019-01-01");
+        payload.put("firstname", randomStuff.name().firstName());
+        payload.put("lastname", randomStuff.name().lastName());
+        payload.put("totalprice", 111);
+        payload.put("depositpaid", true);
+        payload.put("bookingdates", bookingDates);
+        payload.put("additionalneeds", "breakfast");
         return payload;
     }
+
+    public JSONObject getWrongBookingPayload() {
+        JSONObject payload = new JSONObject();
+        payload.put("firstname", randomStuff.name().firstName());
+        payload.put("lastname", randomStuff.name().lastName());
+        payload.put("totalprice", false);
+        payload.put("depositpaid", true);
+        payload.put("additionalneeds", "breakfast");
+        return payload;
+    }
+
+//    public JSONObject getBookingPayloadExtraInfo() {
+//        JSONObject payload = getBookingPayload();
+//        payload.put("transport", true);
+//        payload.put("safe", false);
+//        payload.put("wakecalltime", 8);
+//        return payload;
+//    }
 }
