@@ -21,7 +21,7 @@ public class BookingPayloads {
         return payload;
     }
 
-    public JSONObject getWrongBookingPayload() {
+    public JSONObject getPayloadMissingParams() {
         JSONObject payload = new JSONObject();
         payload.put("firstname", randomStuff.name().firstName());
         payload.put("lastname", randomStuff.name().lastName());
@@ -30,12 +30,4 @@ public class BookingPayloads {
         payload.put("additionalneeds", "breakfast");
         return payload;
     }
-
-//    public JSONObject getBookingPayloadExtraInfo() {
-//        JSONObject payload = getBookingPayload();
-//        payload.put("transport", true);
-//        payload.put("safe", false);
-//        payload.put("wakecalltime", 8);
-//        return payload;
-//    }
 }

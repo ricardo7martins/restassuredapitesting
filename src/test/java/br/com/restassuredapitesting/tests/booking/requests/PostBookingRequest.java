@@ -34,16 +34,18 @@ public class PostBookingRequest {
                 .post("booking");
     }
 
+    @Step("Pedir para criar reserva faltando parâmetros no corpo do envio")
     public Response sendBookingWithMissingInfo() {
         return given()
                 .header("Content-Type", "application/json")
                 .header("Accept", "application/json")
                 .header("Cookie", getLogin.getToken())
                 .when()
-                .body(bookingPayload.getWrongBookingPayload().toString())
+                .body(bookingPayload.getPayloadMissingParams().toString())
                 .post("booking");
     }
 
+    @Step("Pedir para criar reserva com parâmetros adicionais no corpo do envio")
     public Response sendBookingWithExtraInfo() {
         JSONObject payload = bookingPayload.getBookingPayload();
         payload.put("transport", true);
@@ -59,6 +61,7 @@ public class PostBookingRequest {
                 .post("booking");
     }
 
+    @Step("Pedir para criar reserva com header Accept inválido")
     public Response sendBookingWithInvalidAcceptHeader() {
         return given()
                 .header("Content-Type", "application/json")

@@ -23,6 +23,7 @@ public class PutBookingRequest {
                 .put("booking/" + id);
     }
 
+    @Step("Atualiza uma reserva específica sem o parâmetro token")
     public Response updateBookingNoToken(int id) {
         return given()
                 .header("Content-Type", "application/json")
@@ -32,6 +33,7 @@ public class PutBookingRequest {
                 .put("booking/" + id);
     }
 
+    @Step("Atualiza parte de uma reserva específica com o parâmetro token")
     public Response updatePartialWithToken() {
         JSONObject payload = new JSONObject();
         payload.put("firstname", "Jonas");

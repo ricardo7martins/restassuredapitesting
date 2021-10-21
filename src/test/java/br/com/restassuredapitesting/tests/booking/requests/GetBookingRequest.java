@@ -15,6 +15,7 @@ public class GetBookingRequest extends BaseTests {
                 .get("booking");
     }
 
+    @Step("Retorna o Id da primeira reserva na lista")
     public int getFirstId() {
         int first = bookingReturnIds()
                 .then()
@@ -24,18 +25,21 @@ public class GetBookingRequest extends BaseTests {
         return first;
     }
 
+    @Step("Retorna a primeira reserva na lista")
     public Response getFirstBooking() {
         return given()
                 .when()
                 .get("booking/" + getFirstId());
     }
 
+    @Step("Filtra a lista de reservas por um parâmetro")
     public Response getBookingsBySingleFilter(String filter, String value) {
         return given()
                 .when()
                 .get(String.format("booking/?%s=%s", filter, value));
     }
 
+    @Step("Filtra a lista de reservas por dois parâmetros")
     public Response getBookingsByTwoFilters(String firstFilter, String firstValue,
                                             String secondFilter, String secondValue) {
         return given()
