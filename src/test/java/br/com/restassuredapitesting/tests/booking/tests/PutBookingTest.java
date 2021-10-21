@@ -3,6 +3,7 @@ package br.com.restassuredapitesting.tests.booking.tests;
 import br.com.restassuredapitesting.base.BaseTests;
 import br.com.restassuredapitesting.suites.AcceptanceTests;
 import br.com.restassuredapitesting.suites.AllTests;
+import br.com.restassuredapitesting.suites.SecurityTests;
 import br.com.restassuredapitesting.suites.SmokeTests;
 import br.com.restassuredapitesting.tests.auth.requests.PostAuthRequest;
 import br.com.restassuredapitesting.tests.booking.requests.GetBookingRequest;
@@ -25,7 +26,7 @@ public class PutBookingTest extends BaseTests {
 
     @Test
     @Severity(SeverityLevel.NORMAL)
-    @Category({AllTests.class, SmokeTests.class})
+    @Category({AllTests.class, SmokeTests.class, SecurityTests.class})
     @DisplayName("Alterar uma reserva somente utilizando o token")
     public void alterarBookingComToken() {
         putBookings.updateBookingToken(getBookings.getFirstId(), login.getToken())
@@ -36,7 +37,7 @@ public class PutBookingTest extends BaseTests {
 
     @Test
     @Severity(SeverityLevel.NORMAL)
-    @Category({AllTests.class, AcceptanceTests.class})
+    @Category({AllTests.class, AcceptanceTests.class, SecurityTests.class})
     @DisplayName("Tentar alterar uma reserva quando o token enviado for inválido")
     public void alterarBookingComTokenInvalido() {
         putBookings.updateBookingToken(getBookings.getFirstId(), "token=birobiro")
@@ -47,7 +48,7 @@ public class PutBookingTest extends BaseTests {
 
     @Test
     @Severity(SeverityLevel.NORMAL)
-    @Category({AllTests.class, AcceptanceTests.class})
+    @Category({AllTests.class, AcceptanceTests.class, SecurityTests.class})
     @DisplayName("Tentar alterar uma reserva quando o token não for enviado")
     public void alterarBookingSemToken() {
         putBookings.updateBookingNoToken(getBookings.getFirstId())

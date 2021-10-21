@@ -3,6 +3,7 @@ package br.com.restassuredapitesting.tests.booking.tests;
 import br.com.restassuredapitesting.base.BaseTests;
 import br.com.restassuredapitesting.suites.AcceptanceTests;
 import br.com.restassuredapitesting.suites.AllTests;
+import br.com.restassuredapitesting.suites.SecurityTests;
 import br.com.restassuredapitesting.suites.SmokeTests;
 import br.com.restassuredapitesting.tests.booking.requests.DeleteBookingRequest;
 import br.com.restassuredapitesting.tests.booking.requests.GetBookingRequest;
@@ -19,7 +20,7 @@ public class DeleteBookingTest extends BaseTests {
 
     @Test
     @Severity(SeverityLevel.CRITICAL)
-    @Category({AllTests.class, SmokeTests.class})
+    @Category({AllTests.class, SmokeTests.class, SecurityTests.class})
     @DisplayName("Excluir um reserva com sucesso")
     public void validaDeleçãoDeBooking() {
         deleteBooking.deleteFirstBooking()
@@ -39,7 +40,7 @@ public class DeleteBookingTest extends BaseTests {
 
     @Test
     @Severity(SeverityLevel.CRITICAL)
-    @Category({AllTests.class, AcceptanceTests.class, SmokeTests.class})
+    @Category({AllTests.class, AcceptanceTests.class, SmokeTests.class, SecurityTests.class})
     @DisplayName("Tentar excluir uma reserva sem autorização")
     public void validaDeleçãoDeBookingSemAutorizacao() {
         deleteBooking.deleteBookingWrongAuth()

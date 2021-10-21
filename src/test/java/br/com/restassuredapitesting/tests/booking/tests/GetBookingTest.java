@@ -21,8 +21,6 @@ import static org.hamcrest.Matchers.is;
 
 @Feature("Feature de Retorno de reservas")
 public class GetBookingTest extends BaseTests {
-
-
     GetBookingRequest getBookingRequest = new GetBookingRequest();
 
     @Test
