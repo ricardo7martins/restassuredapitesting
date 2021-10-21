@@ -52,7 +52,7 @@ public class PostBookingTest extends BaseTests {
     }
 
     @Test
-    @Severity(SeverityLevel.BLOCKER)
+    @Severity(SeverityLevel.NORMAL)
     @Category({AllTests.class, AcceptanceTests.class, ContractTests.class})
     @DisplayName("Validar retorno 500 quando o payload da reserva estiver inválido")
     public void validaSePodeCriarReservaComFaltandoInformacoes() {
@@ -62,7 +62,7 @@ public class PostBookingTest extends BaseTests {
     }
 
     @Test
-    @Severity(SeverityLevel.BLOCKER)
+    @Severity(SeverityLevel.CRITICAL)
     @Category({AllTests.class, AcceptanceTests.class, ContractTests.class})
     @DisplayName("Criar uma reserva enviando mais parâmetros no payload da reserva")
     public void validaSePodeCriarReservaComParametrosAdicionais() {
@@ -74,7 +74,7 @@ public class PostBookingTest extends BaseTests {
     }
 
     @Test
-    @Severity(SeverityLevel.BLOCKER)
+    @Severity(SeverityLevel.NORMAL)
     @Category({AllTests.class, AcceptanceTests.class, SecurityTests.class})
     @DisplayName("Validar retorno 418 quando o header Accept for invalido")
     public void validaSePodeCriarReservaComHeaderAcceptInvalido() {

@@ -58,19 +58,8 @@ public class GetBookingTest extends BaseTests {
                         .getSchemaBasePath("booking", "booking"))));
     }
 
-//    @Test
-//    @Severity(SeverityLevel.BLOCKER)
-//    @Category({AllTests.class, ContractTests.class})
-//    @DisplayName("Listar IDs de reservas utilizando o filtro firstname")
-//    public void validaBookingsComFiltroValido() {
-//        getBookingRequest.getBookingsBySingleFilter("firstname", "Jim")
-//                .then()
-//                .statusCode(200)
-//                .body("size()", greaterThan(0));
-//    }
-
     @Test
-    @Severity(SeverityLevel.BLOCKER)
+    @Severity(SeverityLevel.NORMAL)
     @Category({AllTests.class,})
     @DisplayName("Listar IDs de reservas utilizando o filtro firstname")
     public void validaBookingsComFiltroFirstName() {
@@ -81,7 +70,7 @@ public class GetBookingTest extends BaseTests {
     }
 
     @Test
-    @Severity(SeverityLevel.BLOCKER)
+    @Severity(SeverityLevel.NORMAL)
     @Category({AllTests.class,})
     @DisplayName("Listar IDs de reservas utilizando o filtro lastname")
     public void validaBookingsComFiltroLastName() {
@@ -92,7 +81,7 @@ public class GetBookingTest extends BaseTests {
     }
 
     @Test
-    @Severity(SeverityLevel.BLOCKER)
+    @Severity(SeverityLevel.NORMAL)
     @Category({AllTests.class,})
     @DisplayName("Listar IDs de reservas utilizando o filtro checkin")
     public void validaBookingsComFiltroCheckin() {
@@ -103,7 +92,7 @@ public class GetBookingTest extends BaseTests {
     }
 
     @Test
-    @Severity(SeverityLevel.BLOCKER)
+    @Severity(SeverityLevel.NORMAL)
     @Category({AllTests.class,})
     @DisplayName("Listar IDs de reservas utilizando o filtro checkout")
     public void validaBookingsComFiltroCheckout() {
@@ -114,7 +103,7 @@ public class GetBookingTest extends BaseTests {
     }
 
     @Test
-    @Severity(SeverityLevel.BLOCKER)
+    @Severity(SeverityLevel.NORMAL)
     @Category({AllTests.class, AcceptanceTests.class})
     @DisplayName("Visualizar erro de servidor 500 quando enviar filtro mal formatado")
     public void validaBookingsComFiltroInvalido() {
@@ -125,7 +114,7 @@ public class GetBookingTest extends BaseTests {
     }
 
     @Test
-    @Severity(SeverityLevel.BLOCKER)
+    @Severity(SeverityLevel.NORMAL)
     @Category({AllTests.class,})
     @DisplayName("Retornar lista vazia quando não houver retornos com certo filtro")
     public void validaBookingsComFiltroValidoSemRespostas() {

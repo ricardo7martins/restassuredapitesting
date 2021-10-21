@@ -25,7 +25,7 @@ public class PutBookingTest extends BaseTests {
     PostAuthRequest login = new PostAuthRequest();
 
     @Test
-    @Severity(SeverityLevel.NORMAL)
+    @Severity(SeverityLevel.CRITICAL)
     @Category({AllTests.class, SmokeTests.class, SecurityTests.class})
     @DisplayName("Alterar uma reserva somente utilizando o token")
     public void alterarBookingComToken() {

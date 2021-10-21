@@ -31,7 +31,7 @@ public class DeleteBookingTest extends BaseTests {
     }
 
     @Test
-    @Severity(SeverityLevel.CRITICAL)
+    @Severity(SeverityLevel.NORMAL)
     @Category({AllTests.class, AcceptanceTests.class, SmokeTests.class})
     @DisplayName("Tentar excluir um reserva que não existe")
     public void validaDeleçãoDeBookingNaoExistente() {
