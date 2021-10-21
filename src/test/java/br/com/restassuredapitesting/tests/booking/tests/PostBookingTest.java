@@ -3,6 +3,7 @@ package br.com.restassuredapitesting.tests.booking.tests;
 import br.com.restassuredapitesting.base.BaseTests;
 import br.com.restassuredapitesting.suites.*;
 import br.com.restassuredapitesting.tests.booking.requests.PostBookingRequest;
+import io.qameta.allure.Feature;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import io.qameta.allure.junit4.DisplayName;
@@ -10,6 +11,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
+@Feature("Feature - Adição de Reservas")
 public class PostBookingTest extends BaseTests {
     PostBookingRequest postBooking = new PostBookingRequest();
 

@@ -17,7 +17,7 @@ import org.junit.experimental.categories.Category;
 
 import static org.hamcrest.Matchers.greaterThan;
 
-@Feature("Feature de Atualização de Reservas")
+@Feature("Feature - Atualização de Reservas")
 public class PutBookingTest extends BaseTests {
 
     PutBookingRequest putBookings = new PutBookingRequest();
