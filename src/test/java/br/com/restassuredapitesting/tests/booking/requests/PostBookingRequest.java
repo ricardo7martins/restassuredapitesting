@@ -49,9 +49,7 @@ public class PostBookingRequest {
     public Response sendBookingWithExtraInfo() {
         JSONObject payload = bookingPayload.getBookingPayload();
         payload.put("transport", true);
-        payload.put("safe", false);
-        payload.put("wakeupcalltime", 8);
-
+        payload.put("language", "portuguese");
         return given()
                 .header("Content-Type", "application/json")
                 .header("Accept", "application/json")

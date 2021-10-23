@@ -1,4 +1,31 @@
 -------------------------------------------------------------------------------
 Test set: br.com.restassuredapitesting.runners.AllTests
 -------------------------------------------------------------------------------
-Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 9.283 s - in br.com.restassuredapitesting.runners.AllTests
+Tests run: 21, Failures: 3, Errors: 1, Skipped: 0, Time elapsed: 30.063 s <<< FAILURE! - in br.com.restassuredapitesting.runners.AllTests
+validaBookingsComFiltroInvalido(br.com.restassuredapitesting.tests.booking.tests.GetBookingTest)  Time elapsed: 0.011 s  <<< ERROR!
+java.lang.IllegalArgumentException: Request URI cannot end with ?
+	at br.com.restassuredapitesting.tests.booking.tests.GetBookingTest.validaBookingsComFiltroInvalido(GetBookingTest.java:135)
+
+alterarBookingSemToken(br.com.restassuredapitesting.tests.booking.tests.PutBookingTest)  Time elapsed: 1.871 s  <<< FAILURE!
+java.lang.AssertionError: 
+1 expectation failed.
+Expected status code <401> but was <403>.
+
+	at br.com.restassuredapitesting.tests.booking.tests.PutBookingTest.alterarBookingSemToken(PutBookingTest.java:57)
+
+alterarBookingComTokenInvalido(br.com.restassuredapitesting.tests.booking.tests.PutBookingTest)  Time elapsed: 1.828 s  <<< FAILURE!
+java.lang.AssertionError: 
+1 expectation failed.
+Response body doesn't match expectation.
+Expected: iterable containing ["Forbidden"]
+  Actual: Forbidden
+
+	at br.com.restassuredapitesting.tests.booking.tests.PutBookingTest.alterarBookingComTokenInvalido(PutBookingTest.java:47)
+
+alterarBookingNaoExistente(br.com.restassuredapitesting.tests.booking.tests.PutBookingTest)  Time elapsed: 1.786 s  <<< FAILURE!
+java.lang.AssertionError: 
+1 expectation failed.
+Expected status code <404> but was <405>.
+
+	at br.com.restassuredapitesting.tests.booking.tests.PutBookingTest.alterarBookingNaoExistente(PutBookingTest.java:68)
+

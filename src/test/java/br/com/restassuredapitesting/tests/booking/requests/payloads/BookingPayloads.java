@@ -10,14 +10,14 @@ public class BookingPayloads {
     public JSONObject getBookingPayload() {
         JSONObject payload = new JSONObject();
         JSONObject bookingDates = new JSONObject();
-        bookingDates.put("checkin", "2018-01-01");
+        bookingDates.put("checkin", "2018-06-10");
         bookingDates.put("checkout", "2019-01-01");
         payload.put("firstname", randomStuff.name().firstName());
         payload.put("lastname", randomStuff.name().lastName());
-        payload.put("totalprice", 111);
-        payload.put("depositpaid", true);
+        payload.put("totalprice", randomStuff.random().nextInt(60, 200));
+        payload.put("depositpaid", randomStuff.random().nextBoolean());
         payload.put("bookingdates", bookingDates);
-        payload.put("additionalneeds", "breakfast");
+        payload.put("additionalneeds", randomStuff.food().fruit());
         return payload;
     }
 

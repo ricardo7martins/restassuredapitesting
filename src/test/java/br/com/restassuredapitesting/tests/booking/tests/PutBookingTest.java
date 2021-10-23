@@ -15,6 +15,7 @@ import io.qameta.allure.junit4.DisplayName;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
+import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.greaterThan;
 
 @Feature("Feature - Atualização de Reservas")
@@ -43,7 +44,7 @@ public class PutBookingTest extends BaseTests {
         putBookings.updateBookingToken(getBookings.getFirstId(), "token=birobiro")
                 .then()
                 .statusCode(403)
-                .body("size()", greaterThan(0));
+                .body(contains("Forbidden"));
     }
 
     @Test
@@ -54,7 +55,7 @@ public class PutBookingTest extends BaseTests {
         putBookings.updateBookingNoToken(getBookings.getFirstId())
                 .then()
                 .statusCode(401)
-                .body("size()", greaterThan(0));
+                .body(contains("Unauthorized"));
     }
 
     @Test
@@ -64,7 +65,19 @@ public class PutBookingTest extends BaseTests {
     public void alterarBookingNaoExistente() {
         putBookings.updateBookingToken(10000, login.getToken())
                 .then()
-                .statusCode(405)
-                .body("size()", greaterThan(0));
+                .statusCode(404)
+                .body(contains("Not Found"));
+    }
+
+
+    @Test
+    @Severity(SeverityLevel.NORMAL)
+    @Category({AllTests.class, AcceptanceTests.class, SecurityTests.class})
+    @DisplayName("Alterar uma reserva usando o Basic auth")
+    public void alterarBookingBasicAuth() {
+        putBookings.updateWithBasicAuth()
+                .then()
+                .statusCode(403);
+
     }
 }

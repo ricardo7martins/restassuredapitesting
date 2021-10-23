@@ -12,7 +12,7 @@ public class PutBookingRequest {
     PostAuthRequest login = new PostAuthRequest();
     BookingPayloads bookingPayload = new BookingPayloads();
 
-    @Step("Atualiza uma reserva específica com o parâmetro token")
+    @Step("Atualiza uma reserva com o parâmetro token")
     public Response updateBookingToken(int id, String token) {
         return given()
                 .header("Content-Type", "application/json")
@@ -23,7 +23,7 @@ public class PutBookingRequest {
                 .put("booking/" + id);
     }
 
-    @Step("Atualiza uma reserva específica sem o parâmetro token")
+    @Step("Atualiza uma reserva sem o parâmetro token")
     public Response updateBookingNoToken(int id) {
         return given()
                 .header("Content-Type", "application/json")
@@ -33,18 +33,18 @@ public class PutBookingRequest {
                 .put("booking/" + id);
     }
 
-    @Step("Atualiza parte de uma reserva específica com o parâmetro token")
-    public Response updatePartialWithToken() {
+    @Step("Atualiza parte de uma reserva com o parâmetro token")
+    public Response updateWithBasicAuth() {
         JSONObject payload = new JSONObject();
         payload.put("firstname", "Jonas");
         payload.put("lastname", "Franco");
         return given()
                 .header("Content-Type", "application/json")
                 .header("Accept", "application/json")
-                .header("Cookie", login.getToken())
+                .header("Authorisation", "Basic")
                 .when()
                 .body(payload.toString())
-                .put("booking/" + 8);
+                .put("booking/" + 10);
 
     }
 }

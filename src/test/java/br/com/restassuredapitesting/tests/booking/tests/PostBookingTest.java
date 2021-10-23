@@ -68,9 +68,9 @@ public class PostBookingTest extends BaseTests {
     public void validaSePodeCriarReservaComParametrosAdicionais() {
         postBooking.sendBookingWithExtraInfo()
                 .then()
-                .statusCode(400);
-        System.out.println(postBooking.sendBookingWithLogin().then().extract().asString());
-        Assert.assertEquals("a", postBooking.sendBookingWithLogin().then().extract().asString());
+                .statusCode(200);
+        Assert.assertTrue(postBooking.sendBookingWithExtraInfo().asString().contains("portuguese"));
+        System.out.println("IT PASSED!");
     }
 
     @Test
