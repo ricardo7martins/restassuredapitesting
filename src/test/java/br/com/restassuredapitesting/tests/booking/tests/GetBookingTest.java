@@ -11,6 +11,7 @@ import io.qameta.allure.Feature;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import io.qameta.allure.junit4.DisplayName;
+import io.restassured.response.ExtractableResponse;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
@@ -22,6 +23,7 @@ import static org.hamcrest.Matchers.*;
 @Feature("Feature - Retorno de reservas")
 public class GetBookingTest extends BaseTests {
     GetBookingRequest getBookingRequest = new GetBookingRequest();
+    ExtractableResponse firstBooking = getBookingRequest.getFirstBooking().then().extract();
 
     @Test
     @Severity(SeverityLevel.BLOCKER)
@@ -63,7 +65,8 @@ public class GetBookingTest extends BaseTests {
     @Category({AllTests.class, SmokeTests.class})
     @DisplayName("Listar IDs de reservas utilizando o filtro 'firstname'")
     public void checkSearchFilterFirstName() {
-        getBookingRequest.getBookingsByOneFilter("firstname", "Jim")
+        getBookingRequest.getBookingsByFilters("firstname",
+                        Utils.getValueFromBooking("firstname"))
                 .then()
                 .statusCode(200)
                 .body("size()", greaterThan(0));
@@ -74,7 +77,8 @@ public class GetBookingTest extends BaseTests {
     @Category({AllTests.class, SmokeTests.class})
     @DisplayName("Listar IDs de reservas utilizando o filtro 'lastname'")
     public void checkSearchFilterLastName() {
-        getBookingRequest.getBookingsByOneFilter("lastname", "Brown")
+        getBookingRequest.getBookingsByFilters("lastname",
+                        Utils.getValueFromBooking("lastname"))
                 .then()
                 .statusCode(200)
                 .body("size()", greaterThan(0));
@@ -85,7 +89,8 @@ public class GetBookingTest extends BaseTests {
     @Category({AllTests.class, SmokeTests.class})
     @DisplayName("Listar IDs de reservas utilizando o filtro 'checkin'")
     public void checkSearchFilterCheckin() {
-        getBookingRequest.getBookingsByOneFilter("checkin", "2019-01-01")
+        getBookingRequest.getBookingsByFilters("checkin",
+                        Utils.getValueFromBooking("checkin"))
                 .then()
                 .statusCode(200)
                 .body("size()", greaterThan(0));
@@ -96,7 +101,8 @@ public class GetBookingTest extends BaseTests {
     @Category({AllTests.class, SmokeTests.class})
     @DisplayName("Listar IDs de reservas utilizando o filtro 'checkout'")
     public void checkSearchFilterCheckout() {
-        getBookingRequest.getBookingsByOneFilter("checkout", "2020-07-07")
+        getBookingRequest.getBookingsByFilters("checkout",
+                        Utils.getValueFromBooking("checkout"))
                 .then()
                 .statusCode(200)
                 .body("size()", greaterThan(0));
@@ -107,8 +113,9 @@ public class GetBookingTest extends BaseTests {
     @Category({AllTests.class, SmokeTests.class})
     @DisplayName("Listar IDs de reservas utilizando os filtros 'checkin' e 'checkout'")
     public void checkSearchFilterCheckinAndCheckout() {
-        getBookingRequest.getBookingsByTwoFilters("checkin", "2018-05-01",
-                        "checkout", "2020-03-01")
+        getBookingRequest.getBookingsByFilters(
+                        "checkin", Utils.getValueFromBooking("checkin"),
+                        "checkout", Utils.getValueFromBooking("checkout"))
                 .then()
                 .statusCode(200)
                 .body("size()", greaterThan(0));
@@ -119,9 +126,10 @@ public class GetBookingTest extends BaseTests {
     @Category({AllTests.class, SmokeTests.class})
     @DisplayName("Listar IDs de reservas utilizando os filtros 'firstname', 'checkin' e  'checkout'")
     public void checkSearchFilterNameAndCheckinAndCheckout() {
-        getBookingRequest.getBookingsByThreeFilters("firstname", "Eric",
-                        "checkin", "2021-01-01",
-                        "checkout", "2022-01-01")
+        getBookingRequest.getBookingsByFilters(
+                        "firstname", Utils.getValueFromBooking("firstname"),
+                        "checkin", Utils.getValueFromBooking("checkin"),
+                        "checkout", Utils.getValueFromBooking("checkout"))
                 .then()
                 .statusCode(200)
                 .body("size()", greaterThan(0));
@@ -133,7 +141,7 @@ public class GetBookingTest extends BaseTests {
     @Category({AllTests.class, AcceptanceTests.class})
     @DisplayName("Visualizar erro de servidor 500 quando enviar filtro mal formatado")
     public void checkSearchFilterInvalid() {
-        getBookingRequest.getBookingsByOneFilter("*<):O)", "doesItMatter?")
+        getBookingRequest.getBookingsByFilters("*<):O)", "doesItMatter?")
                 .then()
                 .statusCode(500)
                 .body(contains("Internal Server Error"));
@@ -144,7 +152,7 @@ public class GetBookingTest extends BaseTests {
     @Category({AllTests.class, SmokeTests.class})
     @DisplayName("Retornar lista vazia quando não houver retornos com certo filtro")
     public void checkSearchNoReturnsForFilter() {
-        getBookingRequest.getBookingsByOneFilter("firstname", "NonExistentName")
+        getBookingRequest.getBookingsByFilters("firstname", "NonExistentName")
                 .then()
                 .statusCode(200)
                 .body("size()", is(0));

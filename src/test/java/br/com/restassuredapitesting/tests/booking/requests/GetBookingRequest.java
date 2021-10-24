@@ -7,6 +7,7 @@ import static io.restassured.RestAssured.given;
 
 public class GetBookingRequest {
 
+
     @Step("Retorna os Id da listagem de reservas")
     public Response getAllBookings() {
         return given()
@@ -37,28 +38,31 @@ public class GetBookingRequest {
     }
 
     @Step("Filtra a lista de reservas por um filtro")
-    public Response getBookingsByOneFilter(String filter, String value) {
+    public Response getBookingsByFilters(String filter, String value) {
         return given()
+                .queryParams(filter, value)
                 .when()
-                .get(String.format("booking/?%s=%s", filter, value));
+                .get("booking");
     }
 
+
     @Step("Filtra a lista de reservas por dois filtros")
-    public Response getBookingsByTwoFilters(String firstFilter, String firstValue,
-                                            String secondFilter, String secondValue) {
+    public Response getBookingsByFilters(String firstFilter, String firstValue,
+                                         String secondFilter, String secondValue) {
         return given()
+                .queryParams(firstFilter, firstValue, secondFilter, secondValue)
                 .when()
-                .get(String.format("booking/?%s=%s&%s=%s", firstFilter, firstValue,
-                        secondFilter, secondValue));
+                .get("booking");
     }
 
     @Step("Filtra a lista de reservas por três filtros")
-    public Response getBookingsByThreeFilters(String firstFilter, String firstValue,
-                                              String secondFilter, String secondValue,
-                                              String thirdFilter, String thirdValue) {
+    public Response getBookingsByFilters(String firstFilter, String firstValue,
+                                         String secondFilter, String secondValue,
+                                         String thirdFilter, String thirdValue) {
         return given()
+                .queryParams(firstFilter, firstValue, secondFilter, secondValue,
+                        thirdFilter, thirdValue)
                 .when()
-                .get(String.format("booking/?%s=%s&%s=%s&%s=%s", firstFilter, firstValue,
-                        secondFilter, secondValue, thirdFilter, thirdValue));
+                .get("booking");
     }
 }

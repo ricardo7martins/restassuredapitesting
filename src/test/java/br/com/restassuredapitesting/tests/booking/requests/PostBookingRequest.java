@@ -46,8 +46,7 @@ public class PostBookingRequest {
     }
 
     @Step("Pedir para criar reserva com parâmetros adicionais no corpo do envio")
-    public Response createBookingWithExtraInfo() {
-        JSONObject payload = new BookingPayloads().getBookingPayload();
+    public Response createBookingWithExtraInfo(JSONObject payload) {
         payload.put("transport", true);
         payload.put("language", "portuguese");
         return given()

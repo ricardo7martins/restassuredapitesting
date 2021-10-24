@@ -8,6 +8,7 @@ import br.com.restassuredapitesting.suites.SmokeTests;
 import br.com.restassuredapitesting.tests.auth.requests.PostAuthRequest;
 import br.com.restassuredapitesting.tests.booking.requests.GetBookingRequest;
 import br.com.restassuredapitesting.tests.booking.requests.PutBookingRequest;
+import br.com.restassuredapitesting.tests.booking.requests.payloads.BookingPayloads;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
@@ -24,13 +25,15 @@ public class PutBookingTest extends BaseTests {
     PutBookingRequest putBookings = new PutBookingRequest();
     GetBookingRequest getBookings = new GetBookingRequest();
     PostAuthRequest login = new PostAuthRequest();
+    BookingPayloads bookingPayload = new BookingPayloads();
 
     @Test
     @Severity(SeverityLevel.CRITICAL)
     @Category({AllTests.class, SmokeTests.class, SecurityTests.class})
     @DisplayName("Alterar uma reserva somente utilizando o token")
     public void updateBookingWithToken() {
-        putBookings.updateBookingToken(getBookings.getFirstBookingId(), login.getToken())
+        putBookings.updateBookingToken(getBookings.getFirstBookingId(),
+                        login.getToken())
                 .then()
                 .statusCode(200)
                 .body("size()", greaterThan(0));
@@ -63,7 +66,7 @@ public class PutBookingTest extends BaseTests {
     @Category({AllTests.class, AcceptanceTests.class})
     @DisplayName("Tentar alterar uma reserva que não existe")
     public void updateNonExistentBooking() {
-        putBookings.updateBookingToken(10000, login.getToken())
+        putBookings.updateBookingToken(-1, login.getToken())
                 .then()
                 .statusCode(404)
                 .body(contains("Not Found"));
@@ -77,7 +80,7 @@ public class PutBookingTest extends BaseTests {
     public void updateBookingWithBasicAuth() {
         putBookings.updateBookingWithBasicAuth()
                 .then()
-                .statusCode(403);
+                .statusCode(200);
 
     }
 }

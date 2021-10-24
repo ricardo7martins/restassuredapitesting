@@ -3,10 +3,12 @@ package br.com.restassuredapitesting.tests.booking.tests;
 import br.com.restassuredapitesting.base.BaseTests;
 import br.com.restassuredapitesting.suites.*;
 import br.com.restassuredapitesting.tests.booking.requests.PostBookingRequest;
+import br.com.restassuredapitesting.tests.booking.requests.payloads.BookingPayloads;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import io.qameta.allure.junit4.DisplayName;
+import org.json.JSONObject;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -63,10 +65,12 @@ public class PostBookingTest extends BaseTests {
     @Category({AllTests.class, AcceptanceTests.class, ContractTests.class})
     @DisplayName("Criar uma reserva enviando mais parâmetros no payload da reserva")
     public void checkCreateBookingWithExtraParams() {
-        postBooking.createBookingWithExtraInfo()
+        JSONObject payload = new BookingPayloads().getBookingPayload();
+        payload.put("language", "portuguese");
+        postBooking.createBookingWithExtraInfo(payload)
                 .then()
                 .statusCode(200);
-        Assert.assertTrue(postBooking.createBookingWithExtraInfo().asString().contains("portuguese"));
+        Assert.assertTrue(postBooking.createBookingWithExtraInfo(payload).asString().contains("portuguese"));
     }
 
     @Test
