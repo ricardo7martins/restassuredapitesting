@@ -1,23 +1,22 @@
 package br.com.restassuredapitesting.tests.booking.requests;
 
-import br.com.restassuredapitesting.base.BaseTests;
 import io.qameta.allure.Step;
 import io.restassured.response.Response;
 
 import static io.restassured.RestAssured.given;
 
-public class GetBookingRequest extends BaseTests {
+public class GetBookingRequest {
 
     @Step("Retorna os Id da listagem de reservas")
-    public Response bookingReturnIds() {
+    public Response getAllBookings() {
         return given()
                 .when()
                 .get("booking");
     }
 
     @Step("Retorna o Id da primeira reserva na lista")
-    public int getFirstId() {
-        return bookingReturnIds()
+    public int getFirstBookingId() {
+        return getAllBookings()
                 .then()
                 .statusCode(200)
                 .extract()
@@ -34,15 +33,14 @@ public class GetBookingRequest extends BaseTests {
     public Response getFirstBooking() {
         return given()
                 .when()
-                .get("booking/" + getFirstId());
+                .get("booking/" + getFirstBookingId());
     }
 
     @Step("Filtra a lista de reservas por um filtro")
-    public Response getBookingsBySingleFilter(String filter, String value) {
+    public Response getBookingsByOneFilter(String filter, String value) {
         return given()
                 .when()
-                .get("booking/?" + filter + "=" + value);
-//                .get(String.format("booking/?%s=%s", filter, value));
+                .get(String.format("booking/?%s=%s", filter, value));
     }
 
     @Step("Filtra a lista de reservas por dois filtros")

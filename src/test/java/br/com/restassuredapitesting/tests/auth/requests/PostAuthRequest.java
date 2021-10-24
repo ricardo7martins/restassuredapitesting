@@ -14,7 +14,7 @@ public class PostAuthRequest {
 
 
     @Step("Retorna o token")
-    public Response tokenReturn() {
+    public Response makeLogin() {
         return given()
                 .header("Content-Type", "application/json")
                 .when()
@@ -24,7 +24,7 @@ public class PostAuthRequest {
 
     @Step("Busca o token")
     public String getToken() {
-        return "token=" + this.tokenReturn()
+        return "token=" + this.makeLogin()
                 .then()
                 .statusCode(200)
                 .extract()

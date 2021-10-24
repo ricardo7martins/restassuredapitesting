@@ -29,8 +29,8 @@ public class PutBookingTest extends BaseTests {
     @Severity(SeverityLevel.CRITICAL)
     @Category({AllTests.class, SmokeTests.class, SecurityTests.class})
     @DisplayName("Alterar uma reserva somente utilizando o token")
-    public void alterarBookingComToken() {
-        putBookings.updateBookingToken(getBookings.getFirstId(), login.getToken())
+    public void updateBookingWithToken() {
+        putBookings.updateBookingToken(getBookings.getFirstBookingId(), login.getToken())
                 .then()
                 .statusCode(200)
                 .body("size()", greaterThan(0));
@@ -40,8 +40,8 @@ public class PutBookingTest extends BaseTests {
     @Severity(SeverityLevel.NORMAL)
     @Category({AllTests.class, AcceptanceTests.class, SecurityTests.class})
     @DisplayName("Tentar alterar uma reserva quando o token enviado for inválido")
-    public void alterarBookingComTokenInvalido() {
-        putBookings.updateBookingToken(getBookings.getFirstId(), "token=birobiro")
+    public void updateBookingWithInvalidToken() {
+        putBookings.updateBookingToken(getBookings.getFirstBookingId(), "token=birobiro")
                 .then()
                 .statusCode(403)
                 .body(contains("Forbidden"));
@@ -51,8 +51,8 @@ public class PutBookingTest extends BaseTests {
     @Severity(SeverityLevel.NORMAL)
     @Category({AllTests.class, AcceptanceTests.class, SecurityTests.class})
     @DisplayName("Tentar alterar uma reserva quando o token não for enviado")
-    public void alterarBookingSemToken() {
-        putBookings.updateBookingNoToken(getBookings.getFirstId())
+    public void updateBookingWithNoToken() {
+        putBookings.updateBookingNoToken(getBookings.getFirstBookingId())
                 .then()
                 .statusCode(401)
                 .body(contains("Unauthorized"));
@@ -62,7 +62,7 @@ public class PutBookingTest extends BaseTests {
     @Severity(SeverityLevel.NORMAL)
     @Category({AllTests.class, AcceptanceTests.class})
     @DisplayName("Tentar alterar uma reserva que não existe")
-    public void alterarBookingNaoExistente() {
+    public void updateNonExistentBooking() {
         putBookings.updateBookingToken(10000, login.getToken())
                 .then()
                 .statusCode(404)
@@ -74,8 +74,8 @@ public class PutBookingTest extends BaseTests {
     @Severity(SeverityLevel.NORMAL)
     @Category({AllTests.class, AcceptanceTests.class, SecurityTests.class})
     @DisplayName("Alterar uma reserva usando o Basic auth")
-    public void alterarBookingBasicAuth() {
-        putBookings.updateWithBasicAuth()
+    public void updateBookingWithBasicAuth() {
+        putBookings.updateBookingWithBasicAuth()
                 .then()
                 .statusCode(403);
 

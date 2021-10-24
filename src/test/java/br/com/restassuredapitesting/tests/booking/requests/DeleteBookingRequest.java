@@ -17,16 +17,16 @@ public class DeleteBookingRequest {
                 .header("Content-Type", "application/json")
                 .header("Cookie", loginRequest.getToken())
                 .when()
-                .delete("booking/" + getBookings.getFirstId());
+                .delete("booking/" + getBookings.getFirstBookingId());
     }
 
     @Step("Tenta deletar reserva não existente na lista")
-    public Response deleteMissingBooking(int id) {
+    public Response deleteMissingBooking() {
         return given()
                 .header("Content-Type", "application/json")
                 .header("Cookie", loginRequest.getToken())
                 .when()
-                .delete("booking/" + id);
+                .delete("booking/-1");
     }
 
     @Step("Tenta deletar reserva utilizando token inválido")

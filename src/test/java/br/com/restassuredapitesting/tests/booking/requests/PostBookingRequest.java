@@ -14,7 +14,7 @@ public class PostBookingRequest {
     PostAuthRequest getLogin = new PostAuthRequest();
 
     @Step("Pedir para criar reserva sem estar logado")
-    public Response sendBookingNoLogin() {
+    public Response createBookingNoLogin() {
         return given()
                 .header("Content-Type", "application/json")
                 .header("Accept", "application/json")
@@ -24,7 +24,7 @@ public class PostBookingRequest {
     }
 
     @Step("Pedir para criar reserva estando logado")
-    public Response sendBookingWithLogin() {
+    public Response createBookingWithLogin() {
         return given()
                 .header("Content-Type", "application/json")
                 .header("Accept", "application/json")
@@ -35,19 +35,19 @@ public class PostBookingRequest {
     }
 
     @Step("Pedir para criar reserva faltando parâmetros no corpo do envio")
-    public Response sendBookingWithMissingInfo() {
+    public Response createBookingWithMissingInfo() {
         return given()
                 .header("Content-Type", "application/json")
                 .header("Accept", "application/json")
                 .header("Cookie", getLogin.getToken())
                 .when()
-                .body(bookingPayload.getPayloadMissingParams().toString())
+                .body(bookingPayload.getPayloadWithMissingParams().toString())
                 .post("booking");
     }
 
     @Step("Pedir para criar reserva com parâmetros adicionais no corpo do envio")
-    public Response sendBookingWithExtraInfo() {
-        JSONObject payload = bookingPayload.getBookingPayload();
+    public Response createBookingWithExtraInfo() {
+        JSONObject payload = new BookingPayloads().getBookingPayload();
         payload.put("transport", true);
         payload.put("language", "portuguese");
         return given()
@@ -60,7 +60,7 @@ public class PostBookingRequest {
     }
 
     @Step("Pedir para criar reserva com header Accept inválido")
-    public Response sendBookingWithInvalidAcceptHeader() {
+    public Response createBookingWithInvalidAcceptHeader() {
         return given()
                 .header("Content-Type", "application/json")
                 .header("Accept", "ThisIsNotIt!")

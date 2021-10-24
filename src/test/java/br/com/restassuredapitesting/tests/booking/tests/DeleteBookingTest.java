@@ -6,7 +6,6 @@ import br.com.restassuredapitesting.suites.AllTests;
 import br.com.restassuredapitesting.suites.SecurityTests;
 import br.com.restassuredapitesting.suites.SmokeTests;
 import br.com.restassuredapitesting.tests.booking.requests.DeleteBookingRequest;
-import br.com.restassuredapitesting.tests.booking.requests.GetBookingRequest;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
@@ -16,15 +15,13 @@ import org.junit.experimental.categories.Category;
 
 @Feature("Feature - Deleção de reservas")
 public class DeleteBookingTest extends BaseTests {
-
     DeleteBookingRequest deleteBooking = new DeleteBookingRequest();
-    GetBookingRequest getBookings = new GetBookingRequest();
 
     @Test
     @Severity(SeverityLevel.CRITICAL)
     @Category({AllTests.class, SmokeTests.class, SecurityTests.class})
     @DisplayName("Excluir um reserva com sucesso")
-    public void validaDeleçãoDeBooking() {
+    public void checkBookingDeletion() {
         deleteBooking.deleteFirstBooking()
                 .then()
                 .statusCode(201);
@@ -34,8 +31,8 @@ public class DeleteBookingTest extends BaseTests {
     @Severity(SeverityLevel.NORMAL)
     @Category({AllTests.class, AcceptanceTests.class, SmokeTests.class})
     @DisplayName("Tentar excluir um reserva que não existe")
-    public void validaDeleçãoDeBookingNaoExistente() {
-        deleteBooking.deleteMissingBooking(10000)
+    public void checkNonExistentBookingDeletion() {
+        deleteBooking.deleteMissingBooking()
                 .then()
                 .statusCode(405);
     }
@@ -44,7 +41,7 @@ public class DeleteBookingTest extends BaseTests {
     @Severity(SeverityLevel.CRITICAL)
     @Category({AllTests.class, AcceptanceTests.class, SmokeTests.class, SecurityTests.class})
     @DisplayName("Tentar excluir uma reserva sem autorização")
-    public void validaDeleçãoDeBookingSemAutorizacao() {
+    public void checkUnauthorizedBookingDeletion() {
         deleteBooking.deleteBookingWrongAuth()
                 .then()
                 .statusCode(403);

@@ -19,8 +19,8 @@ public class PostBookingTest extends BaseTests {
     @Severity(SeverityLevel.BLOCKER)
     @Category({AllTests.class, AcceptanceTests.class, SecurityTests.class})
     @DisplayName("Tentar criar uma reserva sem estar logado")
-    public void validaSePodeCriarReservaSemCadastro() {
-        postBooking.sendBookingNoLogin()
+    public void checkCreateBookingNoLogin() {
+        postBooking.createBookingNoLogin()
                 .then()
                 .statusCode(401);
 
@@ -30,33 +30,30 @@ public class PostBookingTest extends BaseTests {
     @Severity(SeverityLevel.BLOCKER)
     @Category({AllTests.class, SmokeTests.class, SecurityTests.class})
     @DisplayName("Tentar criar uma reserva estando logado")
-    public void validaSePodeCriarReservaComCadastro() {
-        postBooking.sendBookingWithLogin()
+    public void checkCreateBookingWithLogin() {
+        postBooking.createBookingWithLogin()
                 .then()
                 .statusCode(200);
-        System.out.println(postBooking.sendBookingWithLogin().getBody().asString());
     }
 
     @Test
     @Severity(SeverityLevel.BLOCKER)
     @Category({AllTests.class, SmokeTests.class, SecurityTests.class})
-    @DisplayName("Validar a criação de mais de um livro em sequencia")
-    public void validaSePodeCriarMaisDeUmaReservaCurtoPeriodo() {
-        for (int i = 1; i < 4; i++) {
-            postBooking.sendBookingWithLogin()
+    @DisplayName("Validar a criação de mais de uma reserva em sequência")
+    public void checkCreateSeveralBookingsShortPeriod() {
+        for (int i = 1; i <= 5; i++) {
+            postBooking.createBookingWithLogin()
                     .then()
                     .statusCode(200);
-            System.out.println("Criada " + i + "ª reserva na sequência!");
         }
-
     }
 
     @Test
     @Severity(SeverityLevel.NORMAL)
     @Category({AllTests.class, AcceptanceTests.class, ContractTests.class})
     @DisplayName("Validar retorno 500 quando o payload da reserva estiver inválido")
-    public void validaSePodeCriarReservaComFaltandoInformacoes() {
-        postBooking.sendBookingWithMissingInfo()
+    public void checkCreateBookingWIthMissingParams() {
+        postBooking.createBookingWithMissingInfo()
                 .then()
                 .statusCode(500);
     }
@@ -65,20 +62,19 @@ public class PostBookingTest extends BaseTests {
     @Severity(SeverityLevel.CRITICAL)
     @Category({AllTests.class, AcceptanceTests.class, ContractTests.class})
     @DisplayName("Criar uma reserva enviando mais parâmetros no payload da reserva")
-    public void validaSePodeCriarReservaComParametrosAdicionais() {
-        postBooking.sendBookingWithExtraInfo()
+    public void checkCreateBookingWithExtraParams() {
+        postBooking.createBookingWithExtraInfo()
                 .then()
                 .statusCode(200);
-        Assert.assertTrue(postBooking.sendBookingWithExtraInfo().asString().contains("portuguese"));
-        System.out.println("IT PASSED!");
+        Assert.assertTrue(postBooking.createBookingWithExtraInfo().asString().contains("portuguese"));
     }
 
     @Test
     @Severity(SeverityLevel.NORMAL)
     @Category({AllTests.class, AcceptanceTests.class, SecurityTests.class})
     @DisplayName("Validar retorno 418 quando o header Accept for invalido")
-    public void validaSePodeCriarReservaComHeaderAcceptInvalido() {
-        postBooking.sendBookingWithInvalidAcceptHeader()
+    public void checkCreateBookingWithInvalidAcceptHeader() {
+        postBooking.createBookingWithInvalidAcceptHeader()
                 .then()
                 .statusCode(418);
     }
