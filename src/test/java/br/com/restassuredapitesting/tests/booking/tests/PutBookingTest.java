@@ -55,7 +55,7 @@ public class PutBookingTest extends BaseTests {
         putBookings.updateBookingNoToken(bookings.getFirstBookingId())
                 .then()
                 .statusCode(401)
-                .body("size()", is(0));
+                .body(equalTo("Unauthorized"));
     }
 
     @Test
