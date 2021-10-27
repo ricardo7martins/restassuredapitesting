@@ -3,7 +3,6 @@ package br.com.restassuredapitesting.tests.booking.requests;
 import br.com.restassuredapitesting.tests.booking.requests.payloads.BookingPayloads;
 import io.qameta.allure.Step;
 import io.restassured.response.Response;
-import org.json.JSONObject;
 
 import static io.restassured.RestAssured.given;
 
@@ -34,16 +33,13 @@ public class PutBookingRequest {
 
     @Step("Atualizar parte de uma reserva com o parâmetro token")
     public Response updateBookingWithBasicAuth() {
-        JSONObject payload = new JSONObject();
-        payload.put("firstname", "Andrew");
-        payload.put("lastname", "Bernard");
         return given()
                 .header("Content-Type", "application/json")
                 .header("Accept", "application/json")
                 .header("Authorization", "Basic YWRtaW46cGFzc3dvcmQxMjM=")
                 .when()
-                .body(payload.toString())
-                .put("booking/" + getBookings.getFirstBooking());
+                .body(bookingPayload.getBookingPayload().toString())
+                .put("booking/" + getBookings.getFirstBookingId());
 
     }
 }

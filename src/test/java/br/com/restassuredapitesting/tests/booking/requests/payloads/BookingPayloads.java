@@ -25,7 +25,6 @@ public class BookingPayloads {
         JSONObject payload = new JSONObject();
         payload.put("firstname", randomStuff.name().firstName());
         payload.put("lastname", randomStuff.name().lastName());
-        payload.put("totalprice", false);
         payload.put("depositpaid", true);
         payload.put("additionalneeds", "breakfast");
         return payload;

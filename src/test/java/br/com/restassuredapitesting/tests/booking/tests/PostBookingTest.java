@@ -9,7 +9,6 @@ import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import io.qameta.allure.junit4.DisplayName;
 import org.json.JSONObject;
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
@@ -43,7 +42,7 @@ public class PostBookingTest extends BaseTests {
     @Category({AllTests.class, SmokeTests.class, SecurityTests.class})
     @DisplayName("Validar a criação de mais de uma reserva em sequência")
     public void checkCreateSeveralBookingsShortPeriod() {
-        for (int i = 1; i <= 5; i++) {
+        for (int i = 0; i < 2; i++) {
             postBooking.createBookingWithLogin()
                     .then()
                     .statusCode(200);
@@ -58,6 +57,7 @@ public class PostBookingTest extends BaseTests {
         postBooking.createBookingWithMissingInfo()
                 .then()
                 .statusCode(500);
+
     }
 
     @Test
@@ -69,8 +69,7 @@ public class PostBookingTest extends BaseTests {
         payload.put("language", "portuguese");
         postBooking.createBookingWithExtraInfo(payload)
                 .then()
-                .statusCode(200);
-        Assert.assertTrue(postBooking.createBookingWithExtraInfo(payload).asString().contains("portuguese"));
+                .statusCode(400);
     }
 
     @Test

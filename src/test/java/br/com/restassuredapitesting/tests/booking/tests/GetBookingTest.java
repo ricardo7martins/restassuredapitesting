@@ -11,7 +11,6 @@ import io.qameta.allure.Feature;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import io.qameta.allure.junit4.DisplayName;
-import io.restassured.response.ExtractableResponse;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
@@ -22,15 +21,14 @@ import static org.hamcrest.Matchers.*;
 
 @Feature("Feature - Retorno de reservas")
 public class GetBookingTest extends BaseTests {
-    GetBookingRequest getBookingRequest = new GetBookingRequest();
-    ExtractableResponse firstBooking = getBookingRequest.getFirstBooking().then().extract();
+    GetBookingRequest bookings = new GetBookingRequest();
 
     @Test
     @Severity(SeverityLevel.BLOCKER)
     @Category({AllTests.class, SmokeTests.class})
     @DisplayName("Listar Ids de reservas")
     public void checkAllBookingsShowing() {
-        getBookingRequest.getAllBookings()
+        bookings.getAllBookings()
                 .then()
                 .statusCode(200)
                 .body("size()", greaterThan(0));
@@ -41,7 +39,7 @@ public class GetBookingTest extends BaseTests {
     @Category({AllTests.class, ContractTests.class})
     @DisplayName("Garantir o schema de retorno da listagem de reservas")
     public void checkBookingsListSchema() {
-        getBookingRequest.getAllBookings()
+        bookings.getAllBookings()
                 .then()
                 .statusCode(200)
                 .body(matchesJsonSchema(new File(Utils
@@ -53,7 +51,7 @@ public class GetBookingTest extends BaseTests {
     @Category({AllTests.class, ContractTests.class})
     @DisplayName("Garantir o schema do retorno de uma reserva específica")
     public void checkBookingSchema() {
-        getBookingRequest.getFirstBooking()
+        bookings.getFirstBooking()
                 .then()
                 .statusCode(200)
                 .body(matchesJsonSchema(new File(Utils
@@ -64,75 +62,81 @@ public class GetBookingTest extends BaseTests {
     @Severity(SeverityLevel.NORMAL)
     @Category({AllTests.class, SmokeTests.class})
     @DisplayName("Listar IDs de reservas utilizando o filtro 'firstname'")
-    public void checkSearchFilterFirstName() {
-        getBookingRequest.getBookingsByFilters("firstname",
-                        Utils.getValueFromBooking("firstname"))
+    public void checkSearchFilteredByFirstName() {
+        bookings.getBookingsByFilters("firstname",
+                        bookings.getValueFromFirstBooking("firstname"))
                 .then()
                 .statusCode(200)
-                .body("size()", greaterThan(0));
+                .body("size()", greaterThan(0))
+                .body("bookingid", hasItem(bookings.getFirstBookingId()));
     }
 
     @Test
     @Severity(SeverityLevel.NORMAL)
     @Category({AllTests.class, SmokeTests.class})
     @DisplayName("Listar IDs de reservas utilizando o filtro 'lastname'")
-    public void checkSearchFilterLastName() {
-        getBookingRequest.getBookingsByFilters("lastname",
-                        Utils.getValueFromBooking("lastname"))
+    public void checkSearchFilteredByLastName() {
+        bookings.getBookingsByFilters("lastname",
+                        bookings.getValueFromFirstBooking("lastname"))
                 .then()
                 .statusCode(200)
-                .body("size()", greaterThan(0));
+                .body("size()", greaterThan(0))
+                .body("bookingid", hasItem(bookings.getFirstBookingId()));
     }
 
     @Test
     @Severity(SeverityLevel.NORMAL)
     @Category({AllTests.class, SmokeTests.class})
     @DisplayName("Listar IDs de reservas utilizando o filtro 'checkin'")
-    public void checkSearchFilterCheckin() {
-        getBookingRequest.getBookingsByFilters("checkin",
-                        Utils.getValueFromBooking("checkin"))
+    public void checkSearchFilteredByCheckin() {
+        bookings.getBookingsByFilters("checkin",
+                        bookings.getValueFromFirstBooking("checkin"))
                 .then()
                 .statusCode(200)
-                .body("size()", greaterThan(0));
+                .body("size()", greaterThan(0))
+                .body("bookingid", hasItem(bookings.getFirstBookingId()));
     }
 
     @Test
     @Severity(SeverityLevel.NORMAL)
     @Category({AllTests.class, SmokeTests.class})
     @DisplayName("Listar IDs de reservas utilizando o filtro 'checkout'")
-    public void checkSearchFilterCheckout() {
-        getBookingRequest.getBookingsByFilters("checkout",
-                        Utils.getValueFromBooking("checkout"))
+    public void checkSearchFilteredByCheckout() {
+        bookings.getBookingsByFilters("checkout",
+                        bookings.getValueFromFirstBooking("checkout"))
                 .then()
                 .statusCode(200)
-                .body("size()", greaterThan(0));
+                .body("size()", greaterThan(0))
+                .body("bookingid", hasItem(bookings.getFirstBookingId()));
     }
 
     @Test
     @Severity(SeverityLevel.NORMAL)
     @Category({AllTests.class, SmokeTests.class})
     @DisplayName("Listar IDs de reservas utilizando os filtros 'checkin' e 'checkout'")
-    public void checkSearchFilterCheckinAndCheckout() {
-        getBookingRequest.getBookingsByFilters(
-                        "checkin", Utils.getValueFromBooking("checkin"),
-                        "checkout", Utils.getValueFromBooking("checkout"))
+    public void checkSearchFilteredByCheckinAndCheckout() {
+        bookings.getBookingsByFilters(
+                        "checkin", bookings.getValueFromFirstBooking("checkin"),
+                        "checkout", bookings.getValueFromFirstBooking("checkout"))
                 .then()
                 .statusCode(200)
-                .body("size()", greaterThan(0));
+                .body("size()", greaterThan(0))
+                .body("bookingid", hasItem(bookings.getFirstBookingId()));
     }
 
     @Test
     @Severity(SeverityLevel.NORMAL)
     @Category({AllTests.class, SmokeTests.class})
     @DisplayName("Listar IDs de reservas utilizando os filtros 'firstname', 'checkin' e  'checkout'")
-    public void checkSearchFilterNameAndCheckinAndCheckout() {
-        getBookingRequest.getBookingsByFilters(
-                        "firstname", Utils.getValueFromBooking("firstname"),
-                        "checkin", Utils.getValueFromBooking("checkin"),
-                        "checkout", Utils.getValueFromBooking("checkout"))
+    public void checkSearchFilteredByNameAndCheckinAndCheckout() {
+        bookings.getBookingsByFilters(
+                        "firstname", bookings.getValueFromFirstBooking("firstname"),
+                        "checkin", bookings.getValueFromFirstBooking("checkin"),
+                        "checkout", bookings.getValueFromFirstBooking("checkout"))
                 .then()
                 .statusCode(200)
-                .body("size()", greaterThan(0));
+                .body("size()", greaterThan(0))
+                .body("bookingid", hasItem(bookings.getFirstBookingId()));
     }
 
 
@@ -141,10 +145,10 @@ public class GetBookingTest extends BaseTests {
     @Category({AllTests.class, AcceptanceTests.class})
     @DisplayName("Visualizar erro de servidor 500 quando enviar filtro mal formatado")
     public void checkSearchFilterInvalid() {
-        getBookingRequest.getBookingsByFilters("*<):O)", "doesItMatter?")
+        bookings.getBookingsByFilters("*<):O)", "doesItMatter?")
                 .then()
                 .statusCode(500)
-                .body(contains("Internal Server Error"));
+                .body("$", equalTo(null));
     }
 
     @Test
@@ -152,7 +156,7 @@ public class GetBookingTest extends BaseTests {
     @Category({AllTests.class, SmokeTests.class})
     @DisplayName("Retornar lista vazia quando não houver retornos com certo filtro")
     public void checkSearchNoReturnsForFilter() {
-        getBookingRequest.getBookingsByFilters("firstname", "NonExistentName")
+        bookings.getBookingsByFilters("firstname", "Totally Impossible Name")
                 .then()
                 .statusCode(200)
                 .body("size()", is(0));

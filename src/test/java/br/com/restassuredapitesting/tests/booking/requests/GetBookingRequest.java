@@ -1,6 +1,7 @@
 package br.com.restassuredapitesting.tests.booking.requests;
 
 import io.qameta.allure.Step;
+import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
 
 import static io.restassured.RestAssured.given;
@@ -24,8 +25,10 @@ public class GetBookingRequest {
                 .path("[0].bookingid");
     }
 
-    public Response getBooking(String id) {
+    @Step("Retorna um booking específico")
+    public Response getBooking(int id) {
         return given()
+                .header("Accept", "application/json")
                 .when()
                 .get("booking/" + id);
     }
@@ -33,6 +36,7 @@ public class GetBookingRequest {
     @Step("Retorna a primeira reserva na lista")
     public Response getFirstBooking() {
         return given()
+                .header("Accept", "application/json")
                 .when()
                 .get("booking/" + getFirstBookingId());
     }
@@ -64,5 +68,30 @@ public class GetBookingRequest {
                         thirdFilter, thirdValue)
                 .when()
                 .get("booking");
+    }
+
+    public String getValueFromFirstBooking(String key) {
+        ExtractableResponse<Response> firstBooking = getFirstBooking().then().extract();
+
+        if (key.equals("checkin")) {
+            key = "bookingdates.get(\"checkin\")";
+        } else if (key.equals("checkout")) {
+            key = "bookingdates.get(\"checkout\")";
+        }
+        return firstBooking.path(key);
+    }
+
+    public String getValueFromBooking(int bookingId, String key) {
+        ExtractableResponse<Response> firstBooking = new GetBookingRequest()
+                .getBooking(bookingId)
+                .then()
+                .extract();
+
+        if (key.equals("checkin")) {
+            key = "bookingdates.get(\"checkin\")";
+        } else if (key.equals("checkout")) {
+            key = "bookingdates.get(\"checkout\")";
+        }
+        return firstBooking.path(key);
     }
 }
