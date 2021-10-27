@@ -25,7 +25,7 @@ public class PutBookingTest extends BaseTests {
     PostAuthRequest login = new PostAuthRequest();
 
     @Test
-    @Severity(SeverityLevel.CRITICAL)
+    @Severity(SeverityLevel.BLOCKER)
     @Category({AllTests.class, SmokeTests.class, SecurityTests.class})
     @DisplayName("Alterar uma reserva somente utilizando o token")
     public void updateBookingWithToken() {
@@ -37,10 +37,9 @@ public class PutBookingTest extends BaseTests {
     }
 
     @Test
-    @Severity(SeverityLevel.NORMAL)
+    @Severity(SeverityLevel.BLOCKER)
     @Category({AllTests.class, AcceptanceTests.class, SecurityTests.class})
     @DisplayName("Tentar alterar uma reserva quando o token enviado for inválido")
-
     public void updateBookingWithInvalidToken() {
         putBookings.updateBookingToken(bookings.getFirstBookingId(), "token=ThereIsNoSpoon")
                 .then()
@@ -49,7 +48,7 @@ public class PutBookingTest extends BaseTests {
     }
 
     @Test
-    @Severity(SeverityLevel.NORMAL)
+    @Severity(SeverityLevel.BLOCKER)
     @Category({AllTests.class, AcceptanceTests.class, SecurityTests.class})
     @DisplayName("Tentar alterar uma reserva quando o token não for enviado")
     public void updateBookingWithNoToken() {
@@ -70,16 +69,25 @@ public class PutBookingTest extends BaseTests {
                 .body("size()", is(0));
     }
 
-
     @Test
-    @Severity(SeverityLevel.NORMAL)
+    @Severity(SeverityLevel.BLOCKER)
     @Category({AllTests.class, SmokeTests.class, SecurityTests.class})
-    @DisplayName("Alterar uma reserva usando o Basic auth")
-    public void updateBookingWithBasicAuth() {
-        putBookings.updateBookingWithBasicAuth()
+    @DisplayName("Alterar uma reserva usando o Basic auth informado na documentação de Booking - UpdateBooking .Header")
+    public void updateBookingWithBasicAuthFromDocs() {
+        putBookings.updateBookingWithBasicAuth("Authorisation", "Basic YWRtaW46cGFzc3dvcmQxMjM=]")
                 .then()
                 .statusCode(200)
-                .body("size()", greaterThan(0))
+                .body("firstname", equalTo(bookings.getValueFromFirstBooking("firstname")));
+    }
+
+    @Test
+    @Severity(SeverityLevel.BLOCKER)
+    @Category({AllTests.class, SmokeTests.class, SecurityTests.class})
+    @DisplayName("Alterar uma reserva usando o Basic auth corrigido")
+    public void updateBookingWithBasicAuthWithCorrection() {
+        putBookings.updateBookingWithBasicAuth("Authorization", "Basic YWRtaW46cGFzc3dvcmQxMjM=")
+                .then()
+                .statusCode(200)
                 .body("firstname", equalTo(bookings.getValueFromFirstBooking("firstname")));
     }
 }

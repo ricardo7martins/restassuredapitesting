@@ -147,8 +147,7 @@ public class GetBookingTest extends BaseTests {
     public void checkSearchFilterInvalid() {
         bookings.getBookingsByFilters("*<):O)", "doesItMatter?")
                 .then()
-                .statusCode(500)
-                .body("$", equalTo(null));
+                .statusCode(500);
     }
 
     @Test

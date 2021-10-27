@@ -12,7 +12,7 @@ import org.json.JSONObject;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
-import static org.hamcrest.Matchers.hasKey;
+import static org.hamcrest.Matchers.*;
 
 @Feature("Feature - Adição de Reservas")
 public class PostBookingTest extends BaseTests {
@@ -36,7 +36,9 @@ public class PostBookingTest extends BaseTests {
     public void checkCreateBookingWithLogin() {
         postBooking.createBookingWithLogin()
                 .then()
-                .statusCode(200);
+                .statusCode(200)
+                .log().all()
+                .body("size()", greaterThan(0));
     }
 
     @Test
@@ -47,11 +49,13 @@ public class PostBookingTest extends BaseTests {
         for (int i = 0; i < 2; i++) {
             postBooking.createBookingWithLogin()
                     .then()
-                    .statusCode(200);
+                    .statusCode(200)
+                    .body("size()", greaterThan(0));
         }
         postBooking.createBookingWithLogin()
                 .then()
-                .statusCode(429);
+                .statusCode(429)
+                .body("size()", equalTo(0));
     }
 
     @Test

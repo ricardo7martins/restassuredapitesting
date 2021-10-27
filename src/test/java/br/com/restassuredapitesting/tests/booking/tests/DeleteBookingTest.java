@@ -43,7 +43,7 @@ public class DeleteBookingTest extends BaseTests {
     }
 
     @Test
-    @Severity(SeverityLevel.CRITICAL)
+    @Severity(SeverityLevel.BLOCKER)
     @Category({AllTests.class, AcceptanceTests.class, SecurityTests.class})
     @DisplayName("Tentar excluir uma reserva sem autorização")
     public void checkUnauthorizedBookingDeletion() {

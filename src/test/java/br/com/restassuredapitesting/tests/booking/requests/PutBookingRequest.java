@@ -32,12 +32,12 @@ public class PutBookingRequest {
     }
 
     @Step("Atualizar parte de uma reserva com o parâmetro token")
-    public Response updateBookingWithBasicAuth() {
+    public Response updateBookingWithBasicAuth(String headerName, String headerValue) {
         return given()
                 .header("Content-Type", "application/json")
                 .header("Accept", "application/json")
                 //.header("Authorization", "Basic YWRtaW46cGFzc3dvcmQxMjM=")
-                .header("Authorisation", "Basic YWRtaW46cGFzc3dvcmQxMjM=]")
+                .header(headerName, headerValue)
                 .when()
                 .body(bookingPayload.getBookingPayload().toString())
                 .put("booking/" + bookings.getFirstBookingId());
