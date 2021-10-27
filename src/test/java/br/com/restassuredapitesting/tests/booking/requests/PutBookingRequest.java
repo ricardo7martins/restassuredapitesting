@@ -8,7 +8,7 @@ import static io.restassured.RestAssured.given;
 
 public class PutBookingRequest {
     BookingPayloads bookingPayload = new BookingPayloads();
-    GetBookingRequest getBookings = new GetBookingRequest();
+    GetBookingRequest bookings = new GetBookingRequest();
 
     @Step("Atualizar uma reserva com o parâmetro token")
     public Response updateBookingToken(int id, String token) {
@@ -36,10 +36,11 @@ public class PutBookingRequest {
         return given()
                 .header("Content-Type", "application/json")
                 .header("Accept", "application/json")
-                .header("Authorization", "Basic YWRtaW46cGFzc3dvcmQxMjM=")
+                //.header("Authorization", "Basic YWRtaW46cGFzc3dvcmQxMjM=")
+                .header("Authorisation", "Basic YWRtaW46cGFzc3dvcmQxMjM=]")
                 .when()
                 .body(bookingPayload.getBookingPayload().toString())
-                .put("booking/" + getBookings.getFirstBookingId());
+                .put("booking/" + bookings.getFirstBookingId());
 
     }
 }

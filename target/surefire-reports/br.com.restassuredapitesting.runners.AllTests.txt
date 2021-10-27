@@ -1,61 +1,94 @@
 -------------------------------------------------------------------------------
 Test set: br.com.restassuredapitesting.runners.AllTests
 -------------------------------------------------------------------------------
-Tests run: 27, Failures: 7, Errors: 1, Skipped: 0, Time elapsed: 61.179 s <<< FAILURE! - in br.com.restassuredapitesting.runners.AllTests
-checkSearchFilterInvalid(br.com.restassuredapitesting.tests.booking.tests.GetBookingTest)  Time elapsed: 1.048 s  <<< FAILURE!
+Tests run: 27, Failures: 12, Errors: 0, Skipped: 0, Time elapsed: 67.321 s <<< FAILURE! - in br.com.restassuredapitesting.runners.AllTests
+checkBookingDeletion(br.com.restassuredapitesting.tests.booking.tests.DeleteBookingTest)  Time elapsed: 3.548 s  <<< FAILURE!
 java.lang.AssertionError: 
 1 expectation failed.
-Expected status code <500> but was <200>.
+Expected status code <204> but was <201>.
 
-	at br.com.restassuredapitesting.tests.booking.tests.GetBookingTest.checkSearchFilterInvalid(GetBookingTest.java:146)
+	at br.com.restassuredapitesting.tests.booking.tests.DeleteBookingTest.checkBookingDeletion(DeleteBookingTest.java:31)
 
-checkSearchFilteredByNameAndCheckinAndCheckout(br.com.restassuredapitesting.tests.booking.tests.GetBookingTest)  Time elapsed: 6.871 s  <<< FAILURE!
-java.lang.AssertionError: 
-1 expectation failed.
-JSON path [0].bookingid doesn't match.
-Expected: 354
-  Actual: null
-
-	at br.com.restassuredapitesting.tests.booking.tests.GetBookingTest.checkSearchFilteredByNameAndCheckinAndCheckout(GetBookingTest.java:135)
-
-checkSearchFilteredByCheckinAndCheckout(br.com.restassuredapitesting.tests.booking.tests.GetBookingTest)  Time elapsed: 5.526 s  <<< FAILURE!
-java.lang.AssertionError: 
-1 expectation failed.
-JSON path [0].bookingid doesn't match.
-Expected: 354
-  Actual: 75
-
-	at br.com.restassuredapitesting.tests.booking.tests.GetBookingTest.checkSearchFilteredByCheckinAndCheckout(GetBookingTest.java:121)
-
-checkSearchFilteredByCheckin(br.com.restassuredapitesting.tests.booking.tests.GetBookingTest)  Time elapsed: 3.474 s  <<< ERROR!
-java.lang.IllegalStateException: Cannot determine which path implementation to use because the content-type text/plain; charset=utf-8 doesn't map to a path implementation.
-	at br.com.restassuredapitesting.tests.booking.tests.GetBookingTest.checkSearchFilteredByCheckin(GetBookingTest.java:92)
-
-checkCreateBookingNoLogin(br.com.restassuredapitesting.tests.booking.tests.PostBookingTest)  Time elapsed: 1.028 s  <<< FAILURE!
-java.lang.AssertionError: 
-1 expectation failed.
-Expected status code <401> but was <200>.
-
-	at br.com.restassuredapitesting.tests.booking.tests.PostBookingTest.checkCreateBookingNoLogin(PostBookingTest.java:26)
-
-checkCreateBookingWithExtraParams(br.com.restassuredapitesting.tests.booking.tests.PostBookingTest)  Time elapsed: 1.706 s  <<< FAILURE!
-java.lang.AssertionError: 
-1 expectation failed.
-Expected status code <400> but was <200>.
-
-	at br.com.restassuredapitesting.tests.booking.tests.PostBookingTest.checkCreateBookingWithExtraParams(PostBookingTest.java:72)
-
-updateNonExistentBooking(br.com.restassuredapitesting.tests.booking.tests.PutBookingTest)  Time elapsed: 1.705 s  <<< FAILURE!
+checkNonExistentBookingDeletion(br.com.restassuredapitesting.tests.booking.tests.DeleteBookingTest)  Time elapsed: 1.757 s  <<< FAILURE!
 java.lang.AssertionError: 
 1 expectation failed.
 Expected status code <404> but was <405>.
 
-	at br.com.restassuredapitesting.tests.booking.tests.PutBookingTest.updateNonExistentBooking(PutBookingTest.java:71)
+	at br.com.restassuredapitesting.tests.booking.tests.DeleteBookingTest.checkNonExistentBookingDeletion(DeleteBookingTest.java:42)
 
-updateBookingWithNoToken(br.com.restassuredapitesting.tests.booking.tests.PutBookingTest)  Time elapsed: 1.781 s  <<< FAILURE!
+checkSearchFilterInvalid(br.com.restassuredapitesting.tests.booking.tests.GetBookingTest)  Time elapsed: 0.94 s  <<< FAILURE!
+java.lang.AssertionError: 
+1 expectation failed.
+Expected status code <500> but was <200>.
+
+	at br.com.restassuredapitesting.tests.booking.tests.GetBookingTest.checkSearchFilterInvalid(GetBookingTest.java:150)
+
+checkSearchFilteredByNameAndCheckinAndCheckout(br.com.restassuredapitesting.tests.booking.tests.GetBookingTest)  Time elapsed: 6.198 s  <<< FAILURE!
+java.lang.AssertionError: 
+1 expectation failed.
+JSON path size() doesn't match.
+Expected: a value greater than <0>
+  Actual: 0
+
+	at br.com.restassuredapitesting.tests.booking.tests.GetBookingTest.checkSearchFilteredByNameAndCheckinAndCheckout(GetBookingTest.java:138)
+
+checkSearchFilteredByCheckinAndCheckout(br.com.restassuredapitesting.tests.booking.tests.GetBookingTest)  Time elapsed: 5.131 s  <<< FAILURE!
+java.lang.AssertionError: 
+1 expectation failed.
+JSON path bookingid doesn't match.
+Expected: a collection containing <632>
+  Actual: [821, 449, 441, 75, 31, 825, 74, 826, 448, 32, 823, 214, 34, 450, 78, 446, 815, 822, 447, 824, 30, 89, 33, 816]
+
+	at br.com.restassuredapitesting.tests.booking.tests.GetBookingTest.checkSearchFilteredByCheckinAndCheckout(GetBookingTest.java:124)
+
+checkSearchFilteredByCheckin(br.com.restassuredapitesting.tests.booking.tests.GetBookingTest)  Time elapsed: 3.521 s  <<< FAILURE!
+java.lang.AssertionError: 
+1 expectation failed.
+JSON path bookingid doesn't match.
+Expected: a collection containing <632>
+  Actual: [624, 638, 704, 595, 307, 409, 388, 577, 582, 594, 644, 827, 581, 681, 821, 306, 217, 579, 591, 593, 178, 118, 592, 604, 576, 567, 357, 221, 218, 285, 138, 384, 449, 605, 18, 613, 359, 617, 609, 58, 369, 125, 441, 590, 616, 349, 215, 123, 75, 540, 26, 31, 614, 825, 56, 737, 390, 216, 417, 135, 424, 598, 74, 304, 627, 17, 8, 574, 826, 134, 303, 393, 649, 575, 701, 129, 620, 601, 533, 301, 365, 170, 383, 682, 416, 43, 155, 448, 49, 6, 126, 32, 402, 658, 823, 35, 45, 318, 308, 546, 120, 367, 321, 59, 151, 223, 600, 621, 214, 34, 450, 410, 55, 44, 78, 659, 147, 146, 446, 41, 815, 392, 165, 171, 635, 822, 618, 738, 10, 447, 607, 578, 88, 419, 685, 641, 143, 132, 127, 154, 824, 550, 549, 623, 647, 420, 152, 316, 30, 499, 315, 385, 53, 57, 25, 368, 121, 634, 222, 403, 119, 153, 423, 637, 596, 828, 327, 626, 89, 606, 295, 386, 534, 425, 164, 622, 608, 33, 619, 639, 305, 130, 422, 15, 320, 122, 169, 537, 389, 133, 39, 610, 611, 317, 816, 573, 720, 394, 136, 572, 27]
+
+	at br.com.restassuredapitesting.tests.booking.tests.GetBookingTest.checkSearchFilteredByCheckin(GetBookingTest.java:97)
+
+checkCreateBookingNoLogin(br.com.restassuredapitesting.tests.booking.tests.PostBookingTest)  Time elapsed: 1.03 s  <<< FAILURE!
+java.lang.AssertionError: 
+1 expectation failed.
+Expected status code <401> but was <200>.
+
+	at br.com.restassuredapitesting.tests.booking.tests.PostBookingTest.checkCreateBookingNoLogin(PostBookingTest.java:28)
+
+checkCreateBookingWithExtraParams(br.com.restassuredapitesting.tests.booking.tests.PostBookingTest)  Time elapsed: 1.676 s  <<< FAILURE!
+java.lang.AssertionError: 
+1 expectation failed.
+Expected status code <400> but was <200>.
+
+	at br.com.restassuredapitesting.tests.booking.tests.PostBookingTest.checkCreateBookingWithExtraParams(PostBookingTest.java:77)
+
+checkCreateSeveralBookingsShortPeriod(br.com.restassuredapitesting.tests.booking.tests.PostBookingTest)  Time elapsed: 5.635 s  <<< FAILURE!
+java.lang.AssertionError: 
+1 expectation failed.
+Expected status code <429> but was <200>.
+
+	at br.com.restassuredapitesting.tests.booking.tests.PostBookingTest.checkCreateSeveralBookingsShortPeriod(PostBookingTest.java:54)
+
+updateBookingWithBasicAuth(br.com.restassuredapitesting.tests.booking.tests.PutBookingTest)  Time elapsed: 1.728 s  <<< FAILURE!
+java.lang.AssertionError: 
+1 expectation failed.
+Expected status code <200> but was <403>.
+
+	at br.com.restassuredapitesting.tests.booking.tests.PutBookingTest.updateBookingWithBasicAuth(PutBookingTest.java:81)
+
+updateNonExistentBooking(br.com.restassuredapitesting.tests.booking.tests.PutBookingTest)  Time elapsed: 1.805 s  <<< FAILURE!
+java.lang.AssertionError: 
+1 expectation failed.
+Expected status code <404> but was <405>.
+
+	at br.com.restassuredapitesting.tests.booking.tests.PutBookingTest.updateNonExistentBooking(PutBookingTest.java:69)
+
+updateBookingWithNoToken(br.com.restassuredapitesting.tests.booking.tests.PutBookingTest)  Time elapsed: 1.672 s  <<< FAILURE!
 java.lang.AssertionError: 
 1 expectation failed.
 Expected status code <401> but was <403>.
 
-	at br.com.restassuredapitesting.tests.booking.tests.PutBookingTest.updateBookingWithNoToken(PutBookingTest.java:60)
+	at br.com.restassuredapitesting.tests.booking.tests.PutBookingTest.updateBookingWithNoToken(PutBookingTest.java:58)
 

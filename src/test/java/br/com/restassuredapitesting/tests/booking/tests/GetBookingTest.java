@@ -36,7 +36,7 @@ public class GetBookingTest extends BaseTests {
 
     @Test
     @Severity(SeverityLevel.BLOCKER)
-    @Category({AllTests.class, ContractTests.class})
+    @Category({AllTests.class, ContractTests.class, SmokeTests.class})
     @DisplayName("Garantir o schema de retorno da listagem de reservas")
     public void checkBookingsListSchema() {
         bookings.getAllBookings()
@@ -48,7 +48,7 @@ public class GetBookingTest extends BaseTests {
 
     @Test
     @Severity(SeverityLevel.BLOCKER)
-    @Category({AllTests.class, ContractTests.class})
+    @Category({AllTests.class, ContractTests.class, SmokeTests.class})
     @DisplayName("Garantir o schema do retorno de uma reserva específica")
     public void checkBookingSchema() {
         bookings.getFirstBooking()

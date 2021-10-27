@@ -9,7 +9,7 @@ import static io.restassured.RestAssured.given;
 public class DeleteBookingRequest {
 
     PostAuthRequest loginRequest = new PostAuthRequest();
-    GetBookingRequest getBookings = new GetBookingRequest();
+    GetBookingRequest bookings = new GetBookingRequest();
 
     @Step("Deleta a primeira reserva na lista")
     public Response deleteFirstBooking() {
@@ -17,7 +17,7 @@ public class DeleteBookingRequest {
                 .header("Content-Type", "application/json")
                 .header("Cookie", loginRequest.getToken())
                 .when()
-                .delete("booking/" + getBookings.getFirstBookingId());
+                .delete("booking/" + bookings.getFirstBookingId());
     }
 
     @Step("Tenta deletar reserva não existente na lista")
@@ -35,7 +35,7 @@ public class DeleteBookingRequest {
                 .header("Content-Type", "application/json")
                 .header("Cookie", "token=birobiro")
                 .when()
-                .delete("booking/" + getBookings.getFirstBooking());
+                .delete("booking/" + bookings.getFirstBooking());
     }
 
 }

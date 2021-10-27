@@ -13,12 +13,12 @@ import org.junit.runners.Suite;
 @RunWith(Categories.class)
 @Categories.IncludeCategory(br.com.restassuredapitesting.suites.AllTests.class)
 @Suite.SuiteClasses({
+        PostAuthTest.class,
         DeleteBookingTest.class,
         GetBookingTest.class,
-        GetPingTest.class,
-        PostAuthTest.class,
         PostBookingTest.class,
-        PutBookingTest.class
+        PutBookingTest.class,
+        GetPingTest.class
 })
 public class AllTests {
 }

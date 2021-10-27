@@ -25,14 +25,6 @@ public class GetBookingRequest {
                 .path("[0].bookingid");
     }
 
-    @Step("Retorna um booking específico")
-    public Response getBooking(int id) {
-        return given()
-                .header("Accept", "application/json")
-                .when()
-                .get("booking/" + id);
-    }
-
     @Step("Retorna a primeira reserva na lista")
     public Response getFirstBooking() {
         return given()
@@ -72,20 +64,6 @@ public class GetBookingRequest {
 
     public String getValueFromFirstBooking(String key) {
         ExtractableResponse<Response> firstBooking = getFirstBooking().then().extract();
-
-        if (key.equals("checkin")) {
-            key = "bookingdates.get(\"checkin\")";
-        } else if (key.equals("checkout")) {
-            key = "bookingdates.get(\"checkout\")";
-        }
-        return firstBooking.path(key);
-    }
-
-    public String getValueFromBooking(int bookingId, String key) {
-        ExtractableResponse<Response> firstBooking = new GetBookingRequest()
-                .getBooking(bookingId)
-                .then()
-                .extract();
 
         if (key.equals("checkin")) {
             key = "bookingdates.get(\"checkin\")";

@@ -25,6 +25,5 @@ public class GetPingTest extends BaseTests {
         getPingRequest.pingReturnApi()
                 .then()
                 .statusCode(201);
-//                .time(lessThan(2L), TimeUnit.SECONDS);
     }
 }
